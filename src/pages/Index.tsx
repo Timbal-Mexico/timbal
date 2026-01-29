@@ -1,21 +1,25 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import Services from "@/components/Services";
-import KommoPartner from "@/components/KommoPartner";
-import About from "@/components/About";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import NavbarSimple from "@/components/NavbarSimple";
+import HeroNew from "@/components/HeroNew";
+import Problem from "@/components/Problem";
+import Solution from "@/components/Solution";
+import Process from "@/components/Process";
+import ForWho from "@/components/ForWho";
+import Benefits from "@/components/Benefits";
+import FinalCTA from "@/components/FinalCTA";
+import FooterSimple from "@/components/FooterSimple";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
-      <Hero />
-      <Services />
-      <KommoPartner />
-      <About />
-      <Contact />
-      <Footer />
+      <NavbarSimple />
+      <HeroNew />
+      <Problem />
+      <Solution />
+      <Process />
+      <ForWho />
+      <Benefits />
+      <FinalCTA />
+      <FooterSimple />
     </div>
   );
 };
