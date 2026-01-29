@@ -32,8 +32,8 @@ const HeroNew = () => {
             transition={{ duration: 0.6 }}
             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6"
           >
-            Ordenamos las conversaciones que{" "}
-            <span className="text-gradient">mueven tu empresa</span>
+            Conversaciones con estrategia. {" "}
+            <span className="text-gradient">Resultados medibles.</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -43,8 +43,7 @@ const HeroNew = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-10"
           >
-            Implementamos sistemas de comunicación y ventas con CRM para que no
-            pierdas oportunidades por desorden, lentitud o falta de seguimiento.
+            Centralizamos tus canales y los conectamos a un CRM para seguimiento, automatización y reportes reales.
           </motion.p>
 
           {/* CTAs */}
