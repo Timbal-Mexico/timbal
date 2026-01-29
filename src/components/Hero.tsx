@@ -70,15 +70,18 @@ const Hero = () => {
               className="gradient-hero text-primary-foreground border-0 shadow-soft hover:opacity-90 transition-all text-lg px-8 py-6 group"
             >
               <MessageCircle className="w-5 h-5 mr-2" />
-              Agenda una llamada
+            <a href="#">  Agenda una llamada</a>
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button
+              asChild
               variant="outline"
               size="lg"
               className="border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground text-lg px-8 py-6"
             >
+              <a href="/servicios">
               Ver servicios
+              </a>
             </Button>
           </motion.div>
 
@@ -90,9 +93,9 @@ const Hero = () => {
             className="mt-20 grid grid-cols-3 gap-8 max-w-2xl mx-auto"
           >
             {[
-              { number: "150+", label: "Clientes activos" },
-              { number: "98%", label: "Satisfacción" },
-              { number: "5M+", label: "Mensajes gestionados" },
+              { number: "30+", label: "Clientes activos" },
+              { number: "90%", label: "Satisfacción" },
+              { number: "10M+", label: "Mensajes gestionados" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="font-display text-3xl sm:text-4xl font-bold text-gradient">

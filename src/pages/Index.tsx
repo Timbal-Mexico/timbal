@@ -5,6 +5,7 @@ import Solution from "@/components/Solution";
 import Process from "@/components/Process";
 import ForWho from "@/components/ForWho";
 import Benefits from "@/components/Benefits";
+import Packages from "@/components/Packages";
 import FinalCTA from "@/components/FinalCTA";
 import FooterSimple from "@/components/FooterSimple";
 
@@ -18,6 +19,7 @@ const Index = () => {
       <Process />
       <ForWho />
       <Benefits />
+      <Packages />
       <FinalCTA />
       <FooterSimple />
     </div>

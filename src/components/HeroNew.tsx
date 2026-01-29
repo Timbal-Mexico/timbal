@@ -3,11 +3,8 @@ import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "./ui/button";
 
 const HeroNew = () => {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const openCalendly = () => {
+    window.open("https://calendly.com/timbalcomunicaciones/30min", "_blank");
   };
 
   return (
@@ -60,7 +57,7 @@ const HeroNew = () => {
             <Button
               size="lg"
               className="gradient-hero text-primary-foreground border-0 shadow-soft hover:opacity-90 transition-all text-lg px-8 py-6 group"
-              onClick={() => scrollToSection("contacto")}
+              onClick={openCalendly}
             >
               <Calendar className="w-5 h-5 mr-2" />
               Agenda un diagnóstico
