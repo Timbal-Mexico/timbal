@@ -20,6 +20,9 @@ const Footer = () => {
               Agencia de marketing digital especializada en mensajería
               conversacional. Tu aliado estratégico en Guadalajara.
             </p>
+            <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Kommo partner" className="inline-block mb-4">
+              <img src="/images/partners/kommo_partner_light.svg" alt="Kommo partner" className="h-10 w-auto rounded-md shadow-sm border border-background/20" />
+            </a>
             <div className="flex gap-4">
               {[Instagram, Linkedin, Facebook].map((Icon, index) => (
                 <a

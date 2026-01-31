@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
 import { Search, PenTool, Cog, GraduationCap, ArrowRight } from "lucide-react";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const steps = [
   {
@@ -29,6 +35,49 @@ const steps = [
 ];
 
 const Process = () => {
+  const logos = [
+    // Kommo light badge (links to Kommo partner page)
+    (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de partner en Kommo">
+            <img src="/images/partners/kommo_partner_light.svg" alt="Kommo partner light" />
+          </a>
+        </TooltipTrigger>
+        <TooltipContent>Ver perfil de partner en Kommo</TooltipContent>
+      </Tooltip>
+    ),
+
+    // Kommo dark badge (links to Kommo partner page)
+    (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de partner en Kommo">
+            <img src="/images/partners/kommo_partner_dark.svg" alt="Kommo partner dark" />
+          </a>
+        </TooltipTrigger>
+        <TooltipContent>Ver perfil de partner en Kommo</TooltipContent>
+      </Tooltip>
+    ),
+   
+    // Clients
+    ...[
+       { name: "Coffee Break", src: "/images/clientes/coffeebreak.webp" },
+       { name: "Expo Ceramicas", src: "/images/clientes/expoceramicas.png" },
+       { name: "Kuzka", src: "/images/clientes/kuzka.jpeg" },
+       { name: "Land4Fun", src: "/images/clientes/land4fun.jpg" },
+       { name: "Mama Lov", src: "/images/clientes/mamalov_logo_blanco.svg", className: "invert" },
+       { name: "Brassa Armada", src: "/images/clientes/brassaarmada.svg" },
+     ].map((client, i) => (
+       <img 
+         key={client.name + i}
+         src={client.src} 
+         alt={client.name}
+         className={`max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300 ${client.className || ''}`}
+       />
+     ))
+  ];
+
   return (
     <section id="como-trabajamos" className="py-24 bg-muted/30">
       <div className="container mx-auto px-6">
@@ -37,7 +86,7 @@ const Process = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
@@ -54,7 +103,7 @@ const Process = () => {
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 className="relative"
               >
@@ -87,6 +136,53 @@ const Process = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Clients carousel */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-12"
+          >
+            <h3 className="font-display text-xl font-semibold text-foreground text-center mb-6">
+              Confían en nosotros
+            </h3>
+
+            <TooltipProvider>
+              <Swiper
+                modules={[Autoplay, Navigation, Pagination, A11y]}
+                spaceBetween={24}
+                slidesPerView={5}
+                loop={true}
+                autoplay={{ delay: 2000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+                breakpoints={{
+                  320: { slidesPerView: 2 },
+                  640: { slidesPerView: 3 },
+                  1024: { slidesPerView: 5 }
+                }}
+                className="client-swiper"
+                aria-label="Clientes que confían en nosotros"
+              >
+                {logos.map((logo, idx) => (
+                  <SwiperSlide key={idx} className="flex items-center justify-center">
+                    <div className="logo flex items-center justify-center w-44 h-20 bg-card rounded-md p-3 shadow-sm">
+                      {logo}
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </TooltipProvider>
+
+            <style>{`
+              .client-swiper .logo svg, .client-swiper .logo img { width: 100%; height: 100%; object-fit: contain; display: block; filter: grayscale(100%); transition: filter 300ms ease, transform 300ms ease, opacity 200ms ease; }
+              .client-swiper .logo { padding: 6px; background: rgba(255,255,255,0.9); border-radius: 8px; }
+              .client-swiper .logo img { background: transparent; padding: 2px; border-radius: 6px; box-shadow: 0 1px 2px rgba(2,6,23,0.06); border: 1px solid rgba(2,6,23,0.04); }
+              .client-swiper .logo:hover svg, .client-swiper .logo:hover img { filter: none; transform: scale(1.02); opacity: 1; }
+              .client-swiper .swiper-slide { display: flex; align-items: center; justify-content: center; }
+              @media (prefers-reduced-motion: reduce) { .client-swiper .swiper-wrapper { animation: none; } }
+            `}</style>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,6 +1,5 @@
 import { Linkedin, MessageCircle, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "../../public/logo.svg";
 
 const FooterSimple = () => {
   const currentYear = new Date().getFullYear();
@@ -20,11 +19,14 @@ const FooterSimple = () => {
           {/* Logo & Description */}
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-6">
-              <img src={logo} alt="Timbal Logo" className="h-10 brightness-0 invert" />
+              <img src="/logo.svg" alt="Timbal Logo" className="h-10 brightness-0 invert" />
             </Link>
             <p className="text-background/70 text-sm">
               Ordenamos las conversaciones que mueven tu empresa.
             </p>
+            <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Kommo partner" className="inline-block mt-4">
+              <img src="/images/partners/kommo_partner_light.svg" alt="Kommo partner" className="h-10 w-auto rounded-md shadow-sm border border-background/20" />
+            </a>
           </div>
 
           {/* Productos */}
@@ -32,24 +34,24 @@ const FooterSimple = () => {
             <h3 className="font-semibold text-background mb-4">Soluciones</h3>
             <ul className="space-y-3 text-sm text-background/70">
               <li>
-                <a href="/#paquetes" className="hover:text-background transition-colors">
+                <Link to="/#paquetes" className="hover:text-background transition-colors">
                   Sales Core
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#paquetes" className="hover:text-background transition-colors">
+                <Link to="/#paquetes" className="hover:text-background transition-colors">
                   Service
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#paquetes" className="hover:text-background transition-colors">
+                <Link to="/#paquetes" className="hover:text-background transition-colors">
                   Operations
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#paquetes" className="hover:text-background transition-colors">
+                <Link to="/#paquetes" className="hover:text-background transition-colors">
                   Full Control
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -59,19 +61,19 @@ const FooterSimple = () => {
             <h3 className="font-semibold text-background mb-4">Empresa</h3>
             <ul className="space-y-3 text-sm text-background/70">
               <li>
-                <a href="/#como-trabajamos" className="hover:text-background transition-colors">
+                <Link to="/#como-trabajamos" className="hover:text-background transition-colors">
                   Cómo trabajamos
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#paquetes" className="hover:text-background transition-colors">
+                <Link to="/#paquetes" className="hover:text-background transition-colors">
                   Precios
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/aviso-privacidad" className="hover:text-background transition-colors">
+                <Link to="/aviso-privacidad" className="hover:text-background transition-colors">
                   Aviso de privacidad
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -96,24 +98,40 @@ const FooterSimple = () => {
               </a>
               <div className="flex items-center gap-4 pt-2">
                 <a
+                  href={contactInfo.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 bg-background/10 rounded-full hover:bg-background/20 transition-colors"
+                  aria-label="WhatsApp"
+                >
+                  <img src="/images/whatsapp-icon.svg" alt="WhatsApp" className="w-5 h-5" />
+                </a>
+                <a
                   href={contactInfo.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg bg-background/10 flex items-center justify-center hover:bg-background/20 transition-colors"
+                  className="p-2 bg-background/10 rounded-full hover:bg-background/20 transition-colors"
                   aria-label="LinkedIn"
-                  title="LinkedIn"
                 >
                   <Linkedin className="w-5 h-5" />
                 </a>
                 <a
-                  href={contactInfo.whatsapp}
+                  href="https://instagram.com/timbal"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg bg-background/10 flex items-center justify-center hover:bg-background/20 transition-colors"
-                  aria-label="WhatsApp"
-                  title="WhatsApp"
+                  className="p-2 bg-background/10 rounded-full hover:bg-background/20 transition-colors"
+                  aria-label="Instagram"
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <img src="/images/instagram-icon.svg" alt="Instagram" className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://facebook.com/timbal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 bg-background/10 rounded-full hover:bg-background/20 transition-colors"
+                  aria-label="Facebook"
+                >
+                   <img src="/images/facebook-icon.svg" alt="Facebook" className="w-5 h-5" />
                 </a>
               </div>
             </div>

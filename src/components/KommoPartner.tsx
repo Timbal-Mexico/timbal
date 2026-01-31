@@ -80,50 +80,12 @@ const KommoPartner = () => {
               <div className="absolute inset-0 gradient-hero rounded-3xl opacity-10 blur-2xl" />
               
               {/* Main card */}
-              <div className="relative bg-card border border-border rounded-3xl p-8 shadow-elevated">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-16 h-16 rounded-2xl gradient-hero flex items-center justify-center">
-                    <Award className="w-8 h-8 text-primary-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-display text-2xl font-bold text-foreground">
-                      Kommo
-                    </h3>
-                    <p className="text-muted-foreground">CRM Conversacional</p>
-                  </div>
-                </div>
-
-                {/* Features showcase */}
-                <div className="space-y-4">
-                  {["WhatsApp Business API", "Automatizaciones", "Pipeline de Ventas"].map(
-                    (feature, index) => (
-                      <motion.div
-                        key={index}
-                        className="bg-muted/50 rounded-xl p-4 flex items-center gap-3"
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 + index * 0.1 }}
-                      >
-                        <div className="w-3 h-3 rounded-full gradient-hero" />
-                        <span className="text-foreground font-medium">
-                          {feature}
-                        </span>
-                      </motion.div>
-                    )
-                  )}
-                </div>
-
-                {/* Floating elements */}
-                <motion.div
-                  className="absolute -top-4 -right-4 w-20 h-20 bg-accent rounded-2xl flex items-center justify-center shadow-soft"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <span className="font-display text-2xl font-bold text-accent-foreground">
-                    ✓
-                  </span>
-                </motion.div>
+              <div className="relative h-full bg-card border border-border rounded-3xl p-4 shadow-elevated overflow-hidden flex items-center justify-center">
+                 <img 
+                    src="/images/certificate.jpeg" 
+                    alt="Certificado Kommo Partner" 
+                    className="w-full h-full object-contain rounded-2xl"
+                 />
               </div>
             </div>
           </motion.div>

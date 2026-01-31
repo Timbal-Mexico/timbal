@@ -7,6 +7,13 @@ const HeroNew = () => {
     window.open("https://calendly.com/timbalcomunicaciones/30min", "_blank");
   };
 
+   const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Elements */}
@@ -25,6 +32,23 @@ const HeroNew = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center mx-auto mb-6"
+            aria-hidden={false}
+          >
+            <a
+              href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Ver perfil de partner en Kommo"
+            >
+              <img src="/images/partners/kommo_partner_dark.svg" alt="Kommo partner" className="h-10 w-auto rounded-md shadow-sm border border-white/10" />
+            </a>
+          </motion.div>
+
           {/* Main Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
