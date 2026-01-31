@@ -2,12 +2,14 @@ import { motion } from "framer-motion";
 import { Calendar, ArrowRight, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { PopupModal } from "react-calendly";
 
 const FinalCTA = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
   const openCalendly = () => {
-    window.open("https://calendly.com/timbalcomunicaciones/30min", "_blank");
+    setIsCalendlyOpen(true);
   };
 
   const scrollToWhatsApp = () => {
@@ -164,6 +166,13 @@ const FinalCTA = () => {
           </p>
         </motion.div>
       </div>
+
+      <PopupModal
+        url="https://calendly.com/timbalcomunicaciones/30min"
+        onModalClose={() => setIsCalendlyOpen(false)}
+        open={isCalendlyOpen}
+        rootElement={document.getElementById("root")!}
+      />
     </section>
   );
 };

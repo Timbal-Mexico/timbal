@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, ArrowRight, X, ChevronLeft, ChevronRight, TrendingUp, HeadphonesIcon, Settings2, Users, Zap, BarChart3 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { PopupModal } from "react-calendly";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -281,11 +282,10 @@ const PackageModal = ({ pkg, isOpen, onClose, onCalendly }) => {
 const Packages = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState(null);
-
-
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
   const openCalendly = () => {
-    window.open("https://calendly.com/timbalcomunicaciones/30min", "_blank");
+    setIsCalendlyOpen(true);
   };
 
   const openModal = (pkg: any) => {
@@ -434,6 +434,13 @@ const Packages = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onCalendly={openCalendly}
+      />
+
+      <PopupModal
+        url="https://calendly.com/timbalcomunicaciones/30min"
+        onModalClose={() => setIsCalendlyOpen(false)}
+        open={isCalendlyOpen}
+        rootElement={document.getElementById("root")!}
       />
     </section>
   );

@@ -59,11 +59,18 @@ const KommoPartner = () => {
             </ul>
 
             <Button
+              asChild
               size="lg"
               className="gradient-hero text-primary-foreground border-0 shadow-soft hover:opacity-90 transition-all group"
             >
-              Conoce más sobre Kommo
-              <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              <a 
+                href="https://kommo.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Conoce más sobre Kommo
+                <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </a>
             </Button>
           </motion.div>
 

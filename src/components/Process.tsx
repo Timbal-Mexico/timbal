@@ -36,30 +36,6 @@ const steps = [
 
 const Process = () => {
   const logos = [
-    // Kommo light badge (links to Kommo partner page)
-    (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de partner en Kommo">
-            <img src="/images/partners/kommo_partner_light.svg" alt="Kommo partner light" />
-          </a>
-        </TooltipTrigger>
-        <TooltipContent>Ver perfil de partner en Kommo</TooltipContent>
-      </Tooltip>
-    ),
-
-    // Kommo dark badge (links to Kommo partner page)
-    (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de partner en Kommo">
-            <img src="/images/partners/kommo_partner_dark.svg" alt="Kommo partner dark" />
-          </a>
-        </TooltipTrigger>
-        <TooltipContent>Ver perfil de partner en Kommo</TooltipContent>
-      </Tooltip>
-    ),
-   
     // Clients
     ...[
        { name: "Coffee Break", src: "/images/clientes/coffeebreak.webp" },

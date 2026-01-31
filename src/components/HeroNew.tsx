@@ -1,10 +1,14 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "./ui/button";
+import { useState } from "react";
+import { PopupModal } from "react-calendly";
 
 const HeroNew = () => {
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+
   const openCalendly = () => {
-    window.open("https://calendly.com/timbalcomunicaciones/30min", "_blank");
+    setIsCalendlyOpen(true);
   };
 
    const scrollToSection = (id: string) => {
@@ -113,6 +117,13 @@ const HeroNew = () => {
           <motion.div className="w-1.5 h-1.5 bg-primary rounded-full" />
         </motion.div>
       </motion.div>
+
+      <PopupModal
+        url="https://calendly.com/timbalcomunicaciones/30min"
+        onModalClose={() => setIsCalendlyOpen(false)}
+        open={isCalendlyOpen}
+        rootElement={document.getElementById("root")!}
+      />
     </section>
   );
 };
