@@ -36,22 +36,37 @@ const steps = [
 
 const Process = () => {
   const logos = [
-    // Clients
-    ...[
-       { name: "Coffee Break", src: "/images/clientes/coffeebreak.webp" },
-       { name: "Expo Ceramicas", src: "/images/clientes/expoceramicas.png" },
-       { name: "Kuzka", src: "/images/clientes/kuzka.jpeg" },
-       { name: "Land4Fun", src: "/images/clientes/land4fun.jpg" },
-       { name: "Mama Lov", src: "/images/clientes/mamalov_logo_blanco.svg", className: "invert" },
-       { name: "Brassa Armada", src: "/images/clientes/brassaarmada.svg" },
-     ].map((client, i) => (
-       <img 
-         key={client.name + i}
-         src={client.src} 
-         alt={client.name}
-         className={`max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300 ${client.className || ''}`}
-       />
-     ))
+    // Kommo light badge (links to Kommo partner page)
+    (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de partner en Kommo">
+            <img src="/images/partners/kommo_partner_light.svg" alt="Kommo partner light" />
+          </a>
+        </TooltipTrigger>
+        <TooltipContent>Ver perfil de partner en Kommo</TooltipContent>
+      </Tooltip>
+    ),
+
+    // Kommo dark badge (links to Kommo partner page)
+    (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de partner en Kommo">
+            <img src="/images/partners/kommo_partner_dark.svg" alt="Kommo partner dark" />
+          </a>
+        </TooltipTrigger>
+        <TooltipContent>Ver perfil de partner en Kommo</TooltipContent>
+      </Tooltip>
+    ),
+
+    // Generic placeholders
+    ...["Cliente A","Cliente B","Cliente C","Cliente D","Cliente E","Cliente F"].map((name, i) => (
+      <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={name} key={name + i}>
+        <rect width="140" height="48" rx="8" fill="#F3F4F6" />
+        <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontFamily="Inter, Arial" fontSize="12" fill="#374151">{name}</text>
+      </svg>
+    ))
   ];
 
   return (
@@ -62,7 +77,7 @@ const Process = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
@@ -79,7 +94,7 @@ const Process = () => {
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 className="relative"
               >
@@ -117,7 +132,7 @@ const Process = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mt-12"
           >
