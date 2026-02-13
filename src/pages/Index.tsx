@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import NavbarSimple from "@/components/NavbarSimple";
 import HeroNew from "@/components/HeroNew";
-import Problem from "@/components/Problem";
-import Solution from "@/components/Solution";
+import About from "@/components/About";
+import Ecosystem from "@/components/Ecosystem";
+import Services from "@/components/Services";
 import Process from "@/components/Process";
-import KommoPartner from "@/components/KommoPartner";
-import ForWho from "@/components/ForWho";
-import Benefits from "@/components/Benefits";
-import Packages from "@/components/Packages";
+import Differential from "@/components/Differential";
+import ServiceModel from "@/components/ServiceModel";
 import FinalCTA from "@/components/FinalCTA";
 import FooterSimple from "@/components/FooterSimple";
 
@@ -30,13 +29,12 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <NavbarSimple />
       <HeroNew />
-      <Problem />
-      <Solution />
+      <About />
+      <Ecosystem />
+      <Services />
       <Process />
-      <KommoPartner />
-      <ForWho />
-      <Benefits />
-      <Packages />
+      <Differential />
+      <ServiceModel />
       <FinalCTA />
       <FooterSimple />
     </div>

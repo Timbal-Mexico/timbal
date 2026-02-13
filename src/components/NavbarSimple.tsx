@@ -32,8 +32,10 @@ const NavbarSimple = () => {
   };
 
   const navLinks = [
-    { name: "Soluciones", id: "paquetes" },
-    { name: "Cómo trabajamos", id: "como-trabajamos" },
+    { name: "Soluciones", id: "servicios" },
+    { name: "Cómo Trabajamos", id: "como-trabajamos" },
+    { name: "Precios", id: "pricing" },
+    { name: "Diferencial", id: "diferencial" },
     { name: "Contacto", id: "contacto" },
   ];
 
@@ -63,12 +65,6 @@ const NavbarSimple = () => {
                   {link.name}
                 </button>
               ))}
-              <button
-                onClick={() => setIsAboutOpen(true)}
-                className="transition-colors font-medium text-muted-foreground hover:text-foreground"
-              >
-                Quienes somos
-              </button>
               <Button
                 onClick={openCalendly}
                 className="gradient-hero text-primary-foreground border-0 shadow-soft hover:opacity-90 transition-opacity"
@@ -105,12 +101,6 @@ const NavbarSimple = () => {
                   {link.name}
                 </button>
               ))}
-              <button
-                onClick={() => { setIsOpen(false); setIsAboutOpen(true); }}
-                className="block w-full text-left px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
-              >
-                Quienes somos
-              </button>
               <Button
                 onClick={openCalendly}
                 className="w-full gradient-hero text-primary-foreground border-0 hover:opacity-90 transition-opacity"

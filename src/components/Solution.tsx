@@ -1,30 +1,30 @@
 import { motion } from "framer-motion";
 import { 
-  TrendingUp, 
-  HeadphonesIcon, 
-  Settings2, 
-  BarChart3 
+  MessageSquare, 
+  ShoppingBag, 
+  Settings, 
+  BarChart 
 } from "lucide-react";
 
 const pillars = [
   {
-    icon: TrendingUp,
-    title: "Ventas",
-    description: "Captura, seguimiento y cierre de leads",
+    icon: MessageSquare,
+    title: "Conversión",
+    description: "CRM, automatización y ventas",
   },
   {
-    icon: HeadphonesIcon,
-    title: "Atención al cliente",
-    description: "Entregas, garantías e incidencias",
+    icon: ShoppingBag,
+    title: "E-commerce",
+    description: "Tiendas online y logística conectada",
   },
   {
-    icon: Settings2,
-    title: "Operación interna",
-    description: "Solicitudes y control entre áreas",
+    icon: Settings,
+    title: "Operación",
+    description: "Procesos internos ordenados",
   },
   {
-    icon: BarChart3,
-    title: "Dirección",
+    icon: BarChart,
+    title: "Estrategia",
     description: "Visibilidad y toma de decisiones",
   },
 ];
@@ -43,13 +43,11 @@ const Solution = () => {
             className="text-center mb-16"
           >
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Timbal convierte conversaciones en{" "}
-              <span className="text-gradient">procesos</span>
+              El Manifiesto <span className="text-gradient">Timbal 2.0</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Timbal diseña e implementa sistemas de comunicación empresarial
-              basados en CRM para ventas, atención al cliente, operación interna
-              y dirección.
+              Las herramientas son el medio, no el fin. 
+              Diseñamos la arquitectura digital que tu negocio necesita para escalar.
             </p>
           </motion.div>
 

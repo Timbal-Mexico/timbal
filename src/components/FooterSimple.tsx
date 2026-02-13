@@ -1,4 +1,4 @@
-import { Linkedin, MessageCircle, Mail, Phone } from "lucide-react";
+import { Linkedin, MessageCircle, Mail, Phone, Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const FooterSimple = () => {
@@ -24,9 +24,6 @@ const FooterSimple = () => {
             <p className="text-background/70 text-sm">
               Ordenamos las conversaciones que mueven tu empresa.
             </p>
-            <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Kommo partner" className="inline-block mt-4">
-              <img src="/images/partners/kommo_partner_light.svg" alt="Kommo partner" className="h-10 w-auto rounded-md shadow-sm border border-background/20" />
-            </a>
           </div>
 
           {/* Productos */}
@@ -34,23 +31,23 @@ const FooterSimple = () => {
             <h3 className="font-semibold text-background mb-4">Soluciones</h3>
             <ul className="space-y-3 text-sm text-background/70">
               <li>
-                <Link to="/#paquetes" className="hover:text-background transition-colors">
-                  Sales Core
+                <Link to="/#servicios" className="hover:text-background transition-colors">
+                  Sistema de Ventas
                 </Link>
               </li>
               <li>
-                <Link to="/#paquetes" className="hover:text-background transition-colors">
-                  Service
+                <Link to="/#servicios" className="hover:text-background transition-colors">
+                  Implementación CRM
                 </Link>
               </li>
               <li>
-                <Link to="/#paquetes" className="hover:text-background transition-colors">
-                  Operations
+                <Link to="/#servicios" className="hover:text-background transition-colors">
+                  Ecommerce
                 </Link>
               </li>
               <li>
-                <Link to="/#paquetes" className="hover:text-background transition-colors">
-                  Full Control
+                <Link to="/#servicios" className="hover:text-background transition-colors">
+                  Automatización
                 </Link>
               </li>
             </ul>
@@ -66,7 +63,7 @@ const FooterSimple = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/#paquetes" className="hover:text-background transition-colors">
+                <Link to="/#pricing" className="hover:text-background transition-colors">
                   Precios
                 </Link>
               </li>
@@ -104,7 +101,7 @@ const FooterSimple = () => {
                   className="p-2 bg-background/10 rounded-full hover:bg-background/20 transition-colors"
                   aria-label="WhatsApp"
                 >
-                  <img src="/images/whatsapp-icon.svg" alt="WhatsApp" className="w-5 h-5" />
+                  <MessageCircle className="w-5 h-5" />
                 </a>
                 <a
                   href={contactInfo.linkedin}
@@ -122,7 +119,7 @@ const FooterSimple = () => {
                   className="p-2 bg-background/10 rounded-full hover:bg-background/20 transition-colors"
                   aria-label="Instagram"
                 >
-                  <img src="/images/instagram-icon.svg" alt="Instagram" className="w-5 h-5" />
+                  <Instagram className="w-5 h-5" />
                 </a>
                 <a
                   href="https://facebook.com/timbal"
@@ -131,7 +128,7 @@ const FooterSimple = () => {
                   className="p-2 bg-background/10 rounded-full hover:bg-background/20 transition-colors"
                   aria-label="Facebook"
                 >
-                   <img src="/images/facebook-icon.svg" alt="Facebook" className="w-5 h-5" />
+                   <Facebook className="w-5 h-5" />
                 </a>
               </div>
             </div>

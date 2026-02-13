@@ -11,23 +11,23 @@ import {
 const problems = [
   {
     icon: UserX,
-    text: "Leads que nadie atiende a tiempo",
+    text: "Herramientas desconectadas y procesos manuales",
   },
   {
     icon: Smartphone,
-    text: "WhatsApps personales sin control",
+    text: "Ventas perdidas por falta de seguimiento",
   },
   {
     icon: Clock,
-    text: "Seguimientos olvidados",
+    text: "Operación interna lenta y caótica",
   },
   {
     icon: Frown,
-    text: "Clientes molestos por falta de respuesta",
+    text: "Inventarios y pedidos fuera de control",
   },
   {
     icon: EyeOff,
-    text: "Dirección sin visibilidad real",
+    text: "Decisiones basadas en intuición, no en datos",
   },
 ];
 
@@ -44,8 +44,8 @@ const Problem = () => {
         >
           {/* Title */}
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-12">
-            El problema no son los leads.{" "}
-            <span className="text-gradient">Es lo que pasa después.</span>
+            Tu negocio crece, <br/>
+            <span className="text-gradient">pero tu estructura no.</span>
           </h2>
 
           {/* Problems grid */}
@@ -79,7 +79,7 @@ const Problem = () => {
           >
             <AlertTriangle className="w-6 h-6" />
             <p className="text-lg font-semibold">
-              Cuando la comunicación no está ordenada, se pierde dinero.
+              Sin estructura, el crecimiento se vuelve un problema.
             </p>
           </motion.div>
         </motion.div>

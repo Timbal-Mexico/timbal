@@ -1,76 +1,86 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, PenTool, Cog, GraduationCap, ArrowRight } from "lucide-react";
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import { Search, PenTool, Cog, GraduationCap, HeartHandshake, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination, A11y } from "swiper/modules";
+import { EffectCoverflow, Pagination, Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const steps = [
   {
     icon: Search,
     number: "01",
-    title: "Diagnóstico",
-    description: "Entendemos cómo entra y se maneja la comunicación hoy.",
+    title: "Diagnóstico Estratégico",
+    description: "Analizamos tu situación actual para identificar cuellos de botella y oportunidades.",
+    details: [
+      "Auditoría de procesos comerciales",
+      "Análisis de stack tecnológico",
+      "Entrevistas con equipo clave",
+      "Identificación de fugas de dinero"
+    ]
   },
   {
     icon: PenTool,
     number: "02",
-    title: "Diseño",
-    description: "Creamos procesos y flujos claros.",
+    title: "Diseño del Ecosistema",
+    description: "Creamos el plano arquitectónico de tu nueva maquinaria de ventas.",
+    details: [
+      "Diseño de Customer Journey Map",
+      "Definición de pipelines de venta",
+      "Selección de herramientas ideales",
+      "Plan de automatización"
+    ]
   },
   {
     icon: Cog,
     number: "03",
     title: "Implementación",
-    description: "Configuramos el CRM y automatizaciones.",
+    description: "Configuramos y conectamos todas las piezas para que funcionen como reloj.",
+    details: [
+      "Configuración técnica de CRM/ERP",
+      "Integraciones API y Webhooks",
+      "Migración de datos segura",
+      "Pruebas de flujo de extremo a extremo"
+    ]
   },
   {
     icon: GraduationCap,
     number: "04",
     title: "Capacitación",
-    description: "Entrenamos al equipo para usarlo bien.",
+    description: "Empoderamos a tu equipo para que dominen las nuevas herramientas.",
+    details: [
+      "Talleres prácticos por rol",
+      "Creación de manuales operativos",
+      "Sesiones de Roleplay",
+      "Certificación interna del equipo"
+    ]
+  },
+  {
+    icon: HeartHandshake,
+    number: "05",
+    title: "Acompañamiento",
+    description: "No te dejamos solo. Aseguramos la adopción y mejora continua.",
+    details: [
+      "Soporte técnico prioritario",
+      "Reuniones de optimización mensual",
+      "Ajustes de estrategia",
+      "Escalamiento de funcionalidades"
+    ]
   },
 ];
 
 const Process = () => {
-  const logos = [
-    // Kommo light badge (links to Kommo partner page)
-    (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de partner en Kommo">
-            <img src="/images/partners/kommo_partner_light.svg" alt="Kommo partner light" />
-          </a>
-        </TooltipTrigger>
-        <TooltipContent>Ver perfil de partner en Kommo</TooltipContent>
-      </Tooltip>
-    ),
-
-    // Kommo dark badge (links to Kommo partner page)
-    (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a href="https://www.kommo.com/es/socios/encontrar-socio/comunicaciones-digitales-timbal/" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de partner en Kommo">
-            <img src="/images/partners/kommo_partner_dark.svg" alt="Kommo partner dark" />
-          </a>
-        </TooltipTrigger>
-        <TooltipContent>Ver perfil de partner en Kommo</TooltipContent>
-      </Tooltip>
-    ),
-
-    // Generic placeholders
-    ...["Cliente A","Cliente B","Cliente C","Cliente D","Cliente E","Cliente F"].map((name, i) => (
-      <svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={name} key={name + i}>
-        <rect width="140" height="48" rx="8" fill="#F3F4F6" />
-        <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontFamily="Inter, Arial" fontSize="12" fill="#374151">{name}</text>
-      </svg>
-    ))
-  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
   return (
-    <section id="como-trabajamos" className="py-24 bg-muted/30">
+    <section id="como-trabajamos" className="py-24 bg-background relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full bg-grid-black/[0.02] dark:bg-grid-white/[0.02] -z-10" />
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           {/* Title */}
@@ -81,99 +91,125 @@ const Process = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-              No improvisamos.{" "}
-              <span className="text-gradient">Implementamos.</span>
+            <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+              Cómo Trabajamos
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mt-4 mb-4">
+              Metodología <span className="text-gradient">Timbal</span>
             </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Un proceso probado para transformar tu operación comercial sin interrumpir tu negocio.
+            </p>
           </motion.div>
 
-          {/* Steps */}
-          <div className="grid md:grid-cols-4 gap-6">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className="relative"
-              >
-                <div className="h-full p-6 bg-background rounded-2xl border border-border shadow-card">
-                  {/* Number */}
-                  <span className="font-display text-5xl font-bold text-primary/10">
+          {/* Timeline Visual - Moved Above */}
+          <div className="flex justify-center mb-12 relative z-10">
+            <div className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-4 max-w-full no-scrollbar px-4 mask-fade-sides">
+              {steps.map((step, index) => (
+                <div 
+                  key={index}
+                  onClick={() => swiperInstance?.slideTo(index)}
+                  className={`
+                    flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer transition-all duration-300 border whitespace-nowrap
+                    ${activeIndex === index 
+                      ? "bg-primary text-primary-foreground border-primary shadow-lg scale-105" 
+                      : "bg-muted/50 text-muted-foreground border-transparent hover:bg-muted hover:border-border"}
+                  `}
+                >
+                  <div className={`
+                    w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors
+                    ${activeIndex === index ? "bg-white text-primary" : "bg-background text-muted-foreground"}
+                  `}>
                     {step.number}
-                  </span>
-
-                  {/* Icon */}
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mt-4 mb-4">
-                    <step.icon className="w-6 h-6 text-primary" />
                   </div>
-
-                  {/* Content */}
-                  <h3 className="font-display text-xl font-bold text-foreground mb-2">
+                  <span className="text-sm font-medium hidden sm:inline-block">
                     {step.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {step.description}
-                  </p>
+                  </span>
                 </div>
-
-                {/* Arrow connector (not on last item) */}
-                {index < steps.length - 1 && (
-                  <div className="hidden md:flex absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
-                    <ArrowRight className="w-6 h-6 text-primary/30" />
-                  </div>
-                )}
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          {/* Clients carousel */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-12"
-          >
-            <h3 className="font-display text-xl font-semibold text-foreground text-center mb-6">
-              Confían en nosotros
-            </h3>
-
-            <TooltipProvider>
-              <Swiper
-                modules={[Autoplay, Navigation, Pagination, A11y]}
-                spaceBetween={24}
-                slidesPerView={5}
-                loop={true}
-                autoplay={{ delay: 2000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-                breakpoints={{
-                  320: { slidesPerView: 2 },
-                  640: { slidesPerView: 3 },
-                  1024: { slidesPerView: 5 }
-                }}
-                className="client-swiper"
-                aria-label="Clientes que confían en nosotros"
-              >
-                {logos.map((logo, idx) => (
-                  <SwiperSlide key={idx} className="flex items-center justify-center">
-                    <div className="logo flex items-center justify-center w-44 h-20 bg-card rounded-md p-3 shadow-sm">
-                      {logo}
+          {/* Swiper Coverflow */}
+          <div className="mb-16">
+            <Swiper
+              effect={'coverflow'}
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={'auto'}
+              coverflowEffect={{
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 2.5,
+                slideShadows: false,
+              }}
+              pagination={{ clickable: true }}
+              modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
+              className="w-full py-10"
+              initialSlide={0}
+              onSwiper={setSwiperInstance}
+              onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1.2,
+                  spaceBetween: 20
+                },
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 30
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 40
+                }
+              }}
+            >
+              {steps.map((step, index) => (
+                <SwiperSlide key={index} className="max-w-md">
+                  <div 
+                    onMouseEnter={() => swiperInstance?.slideTo(index)}
+                    className={`
+                      relative rounded-3xl p-8 border transition-all duration-500 h-full min-h-[400px] flex flex-col
+                      ${activeIndex === index 
+                        ? "bg-card border-primary/50 shadow-2xl scale-100" 
+                        : "bg-muted/30 border-transparent blur-[1px] scale-90 opacity-70 hover:opacity-100 hover:blur-0 hover:scale-95 cursor-pointer"}
+                    `}
+                  >
+                    <div className="absolute -top-6 left-8 bg-background p-2 rounded-2xl border border-border shadow-sm">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${activeIndex === index ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+                        <step.icon className="w-6 h-6" />
+                      </div>
                     </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </TooltipProvider>
 
-            <style>{`
-              .client-swiper .logo svg, .client-swiper .logo img { width: 100%; height: 100%; object-fit: contain; display: block; filter: grayscale(100%); transition: filter 300ms ease, transform 300ms ease, opacity 200ms ease; }
-              .client-swiper .logo { padding: 6px; background: rgba(255,255,255,0.9); border-radius: 8px; }
-              .client-swiper .logo img { background: transparent; padding: 2px; border-radius: 6px; box-shadow: 0 1px 2px rgba(2,6,23,0.06); border: 1px solid rgba(2,6,23,0.04); }
-              .client-swiper .logo:hover svg, .client-swiper .logo:hover img { filter: none; transform: scale(1.02); opacity: 1; }
-              .client-swiper .swiper-slide { display: flex; align-items: center; justify-content: center; }
-              @media (prefers-reduced-motion: reduce) { .client-swiper .swiper-wrapper { animation: none; } }
-            `}</style>
-          </motion.div>
+                    <div className="mt-8 mb-6">
+                      <span className={`text-6xl font-bold opacity-10 absolute top-4 right-8 ${activeIndex === index ? "text-primary" : "text-foreground"}`}>
+                        {step.number}
+                      </span>
+                      <h3 className={`font-display text-2xl font-bold mb-3 ${activeIndex === index ? "text-primary" : "text-foreground"}`}>
+                        {step.title}
+                      </h3>
+                      <p className="text-muted-foreground font-medium">
+                        {step.description}
+                      </p>
+                    </div>
+
+                    {/* Details - Visible mainly on active slide */}
+                    <div className={`space-y-3 mt-auto transition-opacity duration-500 ${activeIndex === index ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}>
+                      <div className="h-px w-full bg-border/50 mb-4" />
+                      {step.details.map((detail, i) => (
+                        <div key={i} className="flex items-start gap-2 text-sm text-foreground/80">
+                          <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                          <span>{detail}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
         </div>
       </div>
     </section>
