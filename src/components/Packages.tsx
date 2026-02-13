@@ -286,17 +286,7 @@ const Packages = () => {
     window.open("https://calendly.com/timbalcomunicaciones/30min", "_blank");
   };
 
-  const handleNext = () => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % totalGroups);
-  };
 
-  const handlePrev = () => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + totalGroups) % totalGroups);
-  };
-
-  const visiblePackages = packages.slice(currentIndex * itemsPerView, (currentIndex + 1) * itemsPerView);
 
   const openModal = (pkg) => {
     setSelectedPackage(pkg);
