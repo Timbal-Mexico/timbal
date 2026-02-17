@@ -18,6 +18,16 @@ const NavbarSimple = () => {
   };
 
   const scrollToSection = (id: string) => {
+    if (id === "inicio") {
+      if (location.pathname !== "/") {
+        navigate("/#inicio");
+        setIsOpen(false);
+        return;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setIsOpen(false);
+      return;
+    }
     if (location.pathname !== "/") {
       navigate(`/#${id}`);
       setIsOpen(false);
@@ -32,6 +42,7 @@ const NavbarSimple = () => {
   };
 
   const navLinks = [
+    { name: "Inicio", id: "inicio" },
     { name: "Soluciones", id: "diferencial" },
     { name: "Precios", id: "pricing" },
     { name: "Contacto", id: "contacto" },

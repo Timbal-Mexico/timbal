@@ -44,13 +44,7 @@ const HeroNew = () => {
   };
 
   return (
-    <section className="relative overflow-hidden min-h-screen flex items-center justify-center bg-background px-6 py-24">
-      <span
-        className="pointer-events-none select-none absolute -top-10 right-6 rotate-45 text-gradient opacity-20 text-[3rem] sm:text-[3.75rem]"
-        style={{ fontFamily: '"Permanent Marker", cursive' }}
-      >
-        release
-      </span>
+    <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center bg-background px-6 py-24">
       <div className="max-w-5xl w-full text-center space-y-8">
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
@@ -75,16 +69,6 @@ const HeroNew = () => {
           </span>
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mx-auto max-w-2xl text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed"
-        >
-          Nos enfocamos en transformar demanda en ingresos medibles: integramos automatización, datos y
-          experiencia. Implementación sin fricción ni caos operativo.
-        </motion.p>
-
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,7 +77,7 @@ const HeroNew = () => {
           <Button
             size="lg"
             className="group relative overflow-hidden rounded-full h-12 px-9 text-base font-semibold text-primary-foreground bg-gradient-to-r from-primary via-secondary to-primary shadow-[0_0_25px_rgba(129,140,248,0.6)] transition-all duration-300 hover:shadow-[0_0_45px_rgba(129,140,248,0.9)] hover:scale-105 focus-visible:scale-105"
-            onClick={() => scrollToSection("servicios")}
+            onClick={() => scrollToSection("diferencial")}
           >
             <span className="relative z-10">Descubre más</span>
             <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-secondary via-primary to-secondary" />

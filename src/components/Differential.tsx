@@ -102,7 +102,7 @@ const Differential = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mt-4 mb-6">
-              Problemáticas empresariales que resolvemos
+              Señales de que tu empresa necesita optimizar su operación
             </h2>
             <p className="text-lg text-muted-foreground">
               Identifica tu reto y conoce cómo lo abordamos.

@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const FooterSimple = () => {
   const currentYear = new Date().getFullYear();
 
-  // 📌 ACTUALIZA ESTOS DATOS CON TUS CONTACTOS REALES
   const contactInfo = {
     whatsapp: "https://wa.me/523323848561",
     linkedin: "https://linkedin.com/company/timbal",
     email: "contacto@timbal.com.mx",
     phone: "+52 1 33 2384 8561",
+    address: "Guadalajara, Jalisco, México",
   };
 
   return (
@@ -22,54 +22,51 @@ const FooterSimple = () => {
               <img src="/logo.svg" alt="Timbal Logo" className="h-10 brightness-0 invert" />
             </Link>
             <p className="text-background/70 text-sm">
-              Ordenamos las conversaciones que mueven tu empresa.
+              Implementamos sistemas comerciales con CRM, automatización y datos para convertir leads en ventas.
             </p>
           </div>
 
-          {/* Productos */}
+          {/* Soluciones */}
           <div>
             <h3 className="font-semibold text-background mb-4">Soluciones</h3>
             <ul className="space-y-3 text-sm text-background/70">
               <li>
                 <Link to="/#diferencial" className="hover:text-background transition-colors">
-                  Sistema de Ventas
+                  Sistema de Ventas 360°
                 </Link>
               </li>
               <li>
                 <Link to="/#diferencial" className="hover:text-background transition-colors">
-                  Implementación CRM
+                  Implementación CRM Comercial
                 </Link>
               </li>
               <li>
                 <Link to="/#diferencial" className="hover:text-background transition-colors">
-                  Ecommerce
+                  Ecommerce Inteligente
                 </Link>
               </li>
               <li>
                 <Link to="/#diferencial" className="hover:text-background transition-colors">
-                  Automatización
+                  Automatización Post-Venta
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Información */}
+          
+
+          {/* Legal */}
           <div>
-            <h3 className="font-semibold text-background mb-4">Empresa</h3>
+            <h3 className="font-semibold text-background mb-4">Legal</h3>
             <ul className="space-y-3 text-sm text-background/70">
               <li>
-                <Link to="/#diferencial" className="hover:text-background transition-colors">
-                  Diferencial
-                </Link>
-              </li>
-              <li>
-                <Link to="/#pricing" className="hover:text-background transition-colors">
-                  Precios
-                </Link>
-              </li>
-              <li>
                 <Link to="/aviso-privacidad" className="hover:text-background transition-colors">
-                  Aviso de privacidad
+                  Política de Privacidad
+                </Link>
+              </li>
+              <li>
+                <Link to="/terminos-condiciones" className="hover:text-background transition-colors">
+                  Términos y Condiciones
                 </Link>
               </li>
             </ul>
@@ -93,6 +90,17 @@ const FooterSimple = () => {
                 <Phone className="w-5 h-5" />
                 <span>{contactInfo.phone}</span>
               </a>
+              <p className="flex items-start gap-3 text-sm text-background/70">
+                <span className="mt-0.5">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"
+                    />
+                  </svg>
+                </span>
+                <span>{contactInfo.address}</span>
+              </p>
               <div className="flex items-center gap-4 pt-2">
                 <a
                   href={contactInfo.whatsapp}

@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription }
 
 const plans = [
   {
-    name: "Starter",
+    name: "Kommo Starter",
     description: "Para iniciar tu transformación digital.",
     price: 24900,
     features: [
@@ -25,7 +25,7 @@ const plans = [
     icon: Zap
   },
   {
-    name: "Growth",
+    name: "Kommo Advance",
     description: "El equilibrio perfecto para escalar.",
     price: 49900,
     features: [
@@ -62,6 +62,19 @@ const plans = [
   }
 ];
 
+const WHATSAPP_NUMBER = "523323848561";
+
+const buildWhatsAppUrl = (serviceName: string) => {
+  const base = `https://wa.me/${WHATSAPP_NUMBER}`;
+  const params = new URLSearchParams({
+    text: `Hola, me interesa su servicio de ${serviceName}`,
+    utm_source: "web",
+    utm_medium: "pricing",
+    utm_campaign: `service_${serviceName.replace(/\s+/g, "_").toLowerCase()}`,
+  });
+  return `${base}?${params.toString()}`;
+};
+
 const Pricing = () => {
   return (
     <section id="pricing" className="py-24 bg-background relative">
@@ -89,7 +102,7 @@ const Pricing = () => {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto items-start">
+        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto items-stretch">
           {plans.map((plan, index) => (
             <motion.div
               key={index}
@@ -97,15 +110,16 @@ const Pricing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative ${plan.highlight ? "md:-mt-8 z-10" : ""}`}
+              whileHover={{ scale: 1.03 }}
+              className="relative h-full group"
             >
               {plan.highlight && (
-                <div className="absolute -top-4 left-0 right-0 mx-auto w-max bg-gradient-to-r from-primary to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                <div className="pointer-events-none absolute -top-5 left-1/2 -translate-x-1/2 z-20 select-none w-max bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg ring-1 ring-white/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-2 group-hover:ring-white group-hover:shadow-2xl group-hover:from-blue-600 group-hover:via-indigo-600 group-hover:to-purple-700">
                   Más Vendido
                 </div>
               )}
               
-              <Card className={`h-full flex flex-col transition-all duration-300 ${plan.highlight ? "border-primary shadow-2xl bg-card" : "border-border hover:border-primary/50 hover:shadow-xl bg-card/50"}`}>
+              <Card className={`h-full flex flex-col transition-all duration-300 will-change-transform transform-gpu overflow-visible ${plan.highlight ? "border-primary shadow-2xl bg-card" : "border-border hover:border-primary/60 hover:shadow-2xl bg-card/50"}`}>
                 <CardHeader>
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${plan.highlight ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}>
                     <plan.icon className="w-6 h-6" />
@@ -144,13 +158,19 @@ const Pricing = () => {
                 </CardContent>
                 
                 <CardFooter>
-                  <Button 
-                    className={`w-full rounded-full ${plan.highlight ? "shadow-lg shadow-primary/25" : ""}`} 
+                  <Button
+                    asChild
+                    className={`w-full rounded-full ${plan.highlight ? "shadow-lg shadow-primary/25" : ""}`}
                     variant={plan.highlight ? "default" : "outline"}
                     size="lg"
-                    onClick={() => window.open("https://calendly.com/timbal/demo", "_blank")}
                   >
-                    {plan.cta} <ArrowRight className="w-4 h-4 ml-2" />
+                    <a
+                      href={buildWhatsAppUrl(plan.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Me interesa su servicio <ArrowRight className="w-4 h-4 ml-2" />
+                    </a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -165,8 +185,19 @@ const Pricing = () => {
             Entendemos que cada empresa es única. Si tus requerimientos superan nuestros planes base, 
             nuestro equipo de ingeniería comercial diseñará una propuesta a tu medida.
           </p>
-          <Button size="lg" variant="secondary" className="rounded-full px-8" onClick={() => window.open("https://calendly.com/timbal/diagnostico", "_blank")}>
-            Contactar con Equipo de Ventas
+          <Button
+            asChild
+            size="lg"
+            variant="secondary"
+            className="rounded-full px-8"
+          >
+            <a
+              href={buildWhatsAppUrl("Contacto con equipo de ventas")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Me interesa su servicio
+            </a>
           </Button>
         </div>
       </div>
