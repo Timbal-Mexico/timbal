@@ -1,56 +1,94 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Check, X, TrendingUp, Clock, Target, Zap, Shield, Users, BarChart3, XCircle, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, BarChart3, Check, Database, LineChart, Users } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
-
-const metrics = [
-  {
-    icon: TrendingUp,
-    value: "Conversión",
-    label: "Más Cierres Reales",
-    description: "Convertimos leads perdidos en ventas concretas."
-  },
-  {
-    icon: Clock,
-    value: "Eficiencia",
-    label: "Menos Caos Operativo",
-    description: "Eliminamos el trabajo manual repetitivo."
-  },
-  {
-    icon: Target,
-    value: "Control",
-    label: "Visibilidad Total",
-    description: "Claridad absoluta sobre dónde está tu dinero."
-  }
-];
-
-const comparisonData = [
-  {
-    feature: "Enfoque Principal",
-    others: "Vender licencias y software",
-    timbal: "Sistemas Digitales de Venta",
-    icon: Zap
-  },
-  {
-    feature: "Implementación",
-    others: "Configuración técnica aislada",
-    timbal: "Alineación de Procesos + Personas + Tecnología",
-    icon: Users
-  },
-  {
-    feature: "Resultado Entregado",
-    others: "Software instalado (pero sin uso)",
-    timbal: "Maquinaria de ventas operando y generando",
-    icon: BarChart3
-  },
-  {
-    feature: "Soporte Post-Venta",
-    others: "Tickets de soporte lentos",
-    timbal: "Acompañamiento estratégico continuo",
-    icon: Shield
-  }
-];
+import { Button } from "./ui/button";
+import { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
 
 const Differential = () => {
+  const problems = [
+    {
+      id: "ventas-invisibles",
+      question: "La pérdida invisible de ventas que no ves, pero pagas todos los días.",
+      icon: AlertTriangle,
+      bullets: [
+        "Mapeo del flujo completo desde lead hasta cierre",
+        "Detección de puntos donde se pierden oportunidades",
+        "Automatización de recordatorios y seguimientos críticos",
+        "Panel de control con dinero en riesgo y oportunidades recuperables",
+      ],
+    },
+    {
+      id: "atencion-leads",
+      question:
+        "¿Tienes certeza de que cada lead que pagas realmente fue atendido y llevado hasta su máximo potencial de venta?",
+      icon: Users,
+      bullets: [
+        "Enrutamiento automático de leads por canal y prioridad",
+        "SLA de respuesta con alertas cuando no se cumple",
+        "Trazabilidad completa de cada interacción con el prospecto",
+        "Reportes de conversión por vendedor y por fuente de tráfico",
+      ],
+    },
+    {
+      id: "informacion-fragmentada",
+      question:
+        "¿La información de tus clientes es un activo de tu empresa… o está en el WhatsApp personal de tus vendedores?",
+      icon: Database,
+      bullets: [
+        "Centralización de conversaciones y datos de clientes en un solo sistema",
+        "Perfiles completos de clientes con historial y acuerdos",
+        "Accesos por rol para proteger la información estratégica",
+        "Continuidad operativa aunque cambie el equipo comercial",
+      ],
+    },
+    {
+      id: "visibilidad-etapas",
+      question: "¿Puedes ver en tiempo real en qué etapa está cada oportunidad comercial?",
+      icon: BarChart3,
+      bullets: [
+        "Diseño de pipeline visual adaptado a tu operación",
+        "Seguimiento por etapa con probabilidades de cierre",
+        "Alertas cuando una oportunidad se estanca demasiado tiempo",
+        "Vista ejecutiva del estado de cada cuenta clave",
+      ],
+    },
+    {
+      id: "dinero-pipeline",
+      question:
+        "¿Tienes visibilidad real de cuánto dinero hay en tu pipeline… o solo ves lo que ya está cerrado?",
+      icon: LineChart,
+      bullets: [
+        "Cálculo automático del valor de cada oportunidad y del pipeline total",
+        "Proyecciones de ingresos según probabilidad y etapa",
+        "Identificación de cuellos de botella que frenan el flujo de dinero",
+        "Reportes de forecast para decisiones de inversión y crecimiento",
+      ],
+    },
+  ];
+
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<typeof problems[number] | null>(null);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+
+  const onOpen = (p: typeof problems[number]) => {
+    setSelected(p);
+    setOpen(true);
+  };
+
+  useEffect(() => {
+    if (!carouselApi || open) return;
+    const id = setInterval(() => {
+      try {
+        carouselApi.scrollNext();
+      } catch {
+        // noop
+      }
+    }, 3500);
+    return () => clearInterval(id);
+  }, [carouselApi, open]);
+
   return (
     <section id="diferencial" className="py-24 bg-muted/30 relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:30px_30px]" />
@@ -63,142 +101,76 @@ const Differential = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-              Diferencial Timbal
-            </span>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mt-4 mb-6">
-              No somos otra agencia de marketing. <br />
-              <span className="text-gradient">Somos arquitectos de negocio.</span>
+              Problemáticas empresariales que resolvemos
             </h2>
             <p className="text-lg text-muted-foreground">
-              Mientras otros se enfocan en conseguir más leads (que a menudo se desperdician), 
-              nosotros construimos la infraestructura para que cada oportunidad cuente.
+              Identifica tu reto y conoce cómo lo abordamos.
             </p>
           </motion.div>
         </div>
 
-        {/* Metrics Section */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
-          {metrics.map((metric, index) => {
-            const Icon = metric.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Card className="border-border/50 hover:border-primary/50 transition-colors bg-background/50 backdrop-blur-sm">
-                  <CardContent className="p-6 flex flex-col items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                      <Icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <h3 className="text-4xl font-bold text-foreground mb-2">{metric.value}</h3>
-                    <h4 className="font-semibold text-primary mb-2">{metric.label}</h4>
-                    <p className="text-sm text-muted-foreground">{metric.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Comparison Section */}
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
-          {/* Visual Infographic / Philosophy */}
-          <motion.div 
-            className="lg:col-span-5 space-y-8"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-             <div className="p-8 rounded-3xl bg-primary text-primary-foreground relative overflow-hidden shadow-xl">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-               <h3 className="text-2xl font-bold mb-4 relative z-10">La Filosofía Timbal</h3>
-               <p className="text-primary-foreground/90 leading-relaxed relative z-10 mb-6">
-                 Creemos que la tecnología sin estrategia es gasto, no inversión. 
-                 Nuestro objetivo no es venderte una herramienta, es darte control total sobre tu crecimiento.
-               </p>
-               <div className="space-y-4 relative z-10">
-                 <div className="flex items-center gap-3">
-                   <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                     <Check className="w-5 h-5" />
-                   </div>
-                   <span className="font-medium">Orden antes que automatización</span>
-                 </div>
-                 <div className="flex items-center gap-3">
-                   <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                     <Check className="w-5 h-5" />
-                   </div>
-                   <span className="font-medium">Procesos claros, luego software</span>
-                 </div>
-                 <div className="flex items-center gap-3">
-                   <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                     <Check className="w-5 h-5" />
-                   </div>
-                   <span className="font-medium">Datos reales para decisiones reales</span>
-                 </div>
-               </div>
-             </div>
-          </motion.div>
-
-          {/* Comparison Table */}
-          <motion.div 
-            className="lg:col-span-7"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="bg-card rounded-3xl border border-border shadow-lg overflow-hidden">
-              <div className="hidden sm:grid grid-cols-3 bg-muted/50 p-4 border-b border-border text-sm font-bold uppercase tracking-wider text-muted-foreground">
-                <div className="col-span-1">Criterio</div>
-                <div className="col-span-1 text-center text-red-500/80">Agencia Tradicional</div>
-                <div className="col-span-1 text-center text-primary">Timbal</div>
-              </div>
-              
-              <div className="divide-y divide-border">
-                {comparisonData.map((row, index) => {
-                  const Icon = row.icon;
-                  return (
-                    <div key={index} className="grid grid-cols-1 sm:grid-cols-3 p-6 hover:bg-muted/20 transition-colors items-center border-b border-border/50 last:border-0 gap-4 sm:gap-0">
-                      
-                      {/* Feature Name */}
-                      <div className="col-span-1 font-medium text-foreground text-base sm:text-base flex items-center gap-3 mb-2 sm:mb-0">
-                        <div className="p-2 rounded-xl bg-primary/10 text-primary shrink-0">
-                          <Icon className="w-5 h-5" />
+        {/* Problemáticas que resolvemos */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-20"
+        >
+          <div className="relative">
+            <Carousel opts={{ align: "start", loop: true }} setApi={setCarouselApi}>
+              <CarouselContent>
+                {problems.map((p) => (
+                  <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
+                    <Card className="h-full border-border/60 bg-primary/5 backdrop-blur-sm hover:border-primary/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20">
+                      <CardContent className="p-6 flex flex-col gap-4 h-full items-center text-center">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+                          {p.icon && <p.icon className="w-6 h-6" />}
                         </div>
-                        {row.feature}
-                      </div>
-
-                      {/* Mobile Comparison Grid */}
-                      <div className="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-0">
-                        
-                        {/* Others (Bad) */}
-                        <div className="bg-red-50/50 sm:bg-transparent p-4 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-red-100 flex flex-col items-center gap-2 text-center">
-                          <span className="sm:hidden text-xs font-bold text-red-500 uppercase tracking-wider mb-1">Agencia Tradicional</span>
-                          <XCircle className="w-6 h-6 text-red-500/80" />
-                          <span className="text-sm text-muted-foreground leading-tight">{row.others}</span>
+                        <h4 className="text-xl font-semibold text-foreground leading-snug">
+                          {p.question}
+                        </h4>
+                        <div className="mt-auto pt-2">
+                          <Button
+                            size="sm"
+                            className="rounded-full px-4 h-9 gradient-hero text-primary-foreground shadow-soft hover:opacity-90"
+                            onClick={() => onOpen(p)}
+                          >
+                            Ver Solucion
+                          </Button>
                         </div>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+        </motion.div>
 
-                        {/* Timbal (Good) */}
-                        <div className="bg-green-50/50 sm:bg-transparent p-4 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-green-100 flex flex-col items-center gap-2 text-center">
-                          <span className="sm:hidden text-xs font-bold text-primary uppercase tracking-wider mb-1">Timbal</span>
-                          <CheckCircle2 className="w-6 h-6 text-green-500" />
-                          <span className="text-sm font-bold text-foreground leading-tight">{row.timbal}</span>
-                        </div>
-
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-        </div>
       </div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{selected?.question}</DialogTitle>
+            <DialogDescription>
+              Solución que Timbal implementa para este escenario.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 mt-2">
+            {selected?.bullets.map((b) => (
+              <div key={b} className="flex items-start gap-2">
+                <Check className="w-4 h-4 text-primary mt-1 shrink-0" />
+                <p className="text-sm text-foreground">{b}</p>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

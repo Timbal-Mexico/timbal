@@ -31,22 +31,22 @@ const FooterSimple = () => {
             <h3 className="font-semibold text-background mb-4">Soluciones</h3>
             <ul className="space-y-3 text-sm text-background/70">
               <li>
-                <Link to="/#servicios" className="hover:text-background transition-colors">
+                <Link to="/#diferencial" className="hover:text-background transition-colors">
                   Sistema de Ventas
                 </Link>
               </li>
               <li>
-                <Link to="/#servicios" className="hover:text-background transition-colors">
+                <Link to="/#diferencial" className="hover:text-background transition-colors">
                   Implementación CRM
                 </Link>
               </li>
               <li>
-                <Link to="/#servicios" className="hover:text-background transition-colors">
+                <Link to="/#diferencial" className="hover:text-background transition-colors">
                   Ecommerce
                 </Link>
               </li>
               <li>
-                <Link to="/#servicios" className="hover:text-background transition-colors">
+                <Link to="/#diferencial" className="hover:text-background transition-colors">
                   Automatización
                 </Link>
               </li>
@@ -58,8 +58,8 @@ const FooterSimple = () => {
             <h3 className="font-semibold text-background mb-4">Empresa</h3>
             <ul className="space-y-3 text-sm text-background/70">
               <li>
-                <Link to="/#como-trabajamos" className="hover:text-background transition-colors">
-                  Cómo trabajamos
+                <Link to="/#diferencial" className="hover:text-background transition-colors">
+                  Diferencial
                 </Link>
               </li>
               <li>
@@ -141,8 +141,9 @@ const FooterSimple = () => {
             <p className="text-background/50 text-sm">
               © {currentYear} Timbal. Todos los derechos reservados.
             </p>
-            <p className="text-background/70 text-sm italic">
-              No vendemos software. Vendemos orden, control y visibilidad.
+            <p className="text-background/70 text-sm max-w-xl text-center md:text-right">
+              Nos enfocamos en resultados que generan ventas, concentramos datos que se convierten en
+              decisiones y te permiten trabajar mejor.
             </p>
           </div>
         </div>
