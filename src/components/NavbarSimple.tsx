@@ -45,7 +45,7 @@ const NavbarSimple = () => {
     { name: "Inicio", id: "inicio" },
     { name: "Soluciones", id: "diferencial" },
     { name: "Precios", id: "pricing" },
-    { name: "Contacto", id: "contacto" },
+    { name: "Testimonios", id: "testimonios" },
   ];
 
   return (

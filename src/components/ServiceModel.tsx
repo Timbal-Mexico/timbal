@@ -2,61 +2,81 @@ import { motion } from "framer-motion";
 import { Check, X, ArrowRight, Zap, Star, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "./ui/card";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "./ui/accordion";
 
 const plans = [
   {
-    name: "Kommo Starter",
-    description: "Para iniciar tu transformación digital.",
-    price: 24900,
+    name: "Kommo Starter (Servicio Base)",
+    description: "Servicio base para implementar Kommo CRM en tu operación.",
+    price: 1390,
     features: [
-      "Solo CRM o Solo Tienda Online",
-      "Configuración base completa",
-      "Capacitación inicial al equipo",
-      "Soporte por email",
-      "Acceso a academia Timbal"
+      "Kommo CRM",
+      "2 usuarios - Plan anual",
+      "Configuración inicial",
+      "1 embudo de ventas",
+      "6 horas de capacitación",
+      "Soporte vía email"
     ],
-    notIncluded: [
-      "Automatizaciones avanzadas",
-      "Dashboard personalizado",
-      "Estrategia mensual"
-    ],
-    cta: "Comenzar ahora",
+    notIncluded: [],
+    cta: "Elegir Kommo Starter",
     highlight: false,
     icon: Zap
   },
   {
     name: "Kommo Advance",
-    description: "El equilibrio perfecto para escalar.",
-    price: 49900,
+    description: "Service core para escalar tu operación comercial con Kommo.",
+    price: 3060,
     features: [
-      "CRM + Tienda Online (Sistema 360°)",
-      "Automatizaciones de flujo completo",
-      "Embudos de venta integrados",
-      "Integración ERP/Facturación",
-      "Dashboard de métricas en vivo"
+      "5 usuarios Kommo - Plan anual",
+      "Configuración completa del entorno",
+      "Diseño de hasta 3 embudos personalizados",
+      "Conexión de WhatsApp + redes sociales",
+      "Automatizaciones intermedias",
+      "Reglas automáticas de asignación de leads",
+      "Tareas automáticas por etapa",
+      "Campos personalizados avanzados",
+      "16 horas de capacitación estratégica",
+      "Manual de uso personalizado",
+      "Soporte prioritario vía Zoom (primer mes)"
     ],
-    notIncluded: [
-      "Optimización mensual dedicada",
-      "Consultoría estratégica"
-    ],
-    cta: "Elegir Growth",
+    notIncluded: [],
+    cta: "Elegir Kommo Advance",
     highlight: true,
     icon: Star
   },
   {
-    name: "Scale",
-    description: "Dominio total de tu mercado.",
-    price: 79900,
+    name: "Ecommerce 360 Starter",
+    description: "Implementación de tienda Shopify integrada con Kommo y logística.",
+    price: 2110,
     features: [
-      "Todo lo incluido en Growth",
-      "Optimización mensual de campañas",
-      "Estrategia comercial recurrente",
-      "Gerente de éxito dedicado",
-      "Auditorías trimestrales",
-      "SLA garantizado"
+      "Tienda en Shopify",
+      "Configuración inicial de la tienda",
+      "Instalación y configuración de plantilla profesional estándar",
+      "Configuración de métodos de pago",
+      "Configuración de impuestos",
+      "Configuración básica de envíos",
+      "Carga inicial de hasta 40 productos",
+      "Creación de páginas básicas (Inicio, Catálogo, Contacto, Políticas)",
+      "Configuración básica SEO (títulos y descripciones generales)",
+      "1 usuario Kommo – Plan anual",
+      "Configuración inicial del entorno en Kommo",
+      "Creación de 1 pipeline ecommerce",
+      "Integración automática tienda → CRM",
+      "Automatización básica de seguimiento",
+      "Configuración de tareas automáticas por etapa",
+      "Integración con Envia",
+      "Configuración básica de reglas de envío",
+      "Pruebas operativas de despacho",
+      "Dominio web incluido (1 año)",
+      "5 cuentas de correo corporativo",
+      "Configuración técnica inicial",
+      "16 horas de capacitación estratégica",
+      "Uso de tienda y gestión de pedidos",
+      "Uso de CRM y flujo operativo completo",
+      "Sesiones distribuidas durante la implementación"
     ],
     notIncluded: [],
-    cta: "Contactar Ventas",
+    cta: "Elegir Paquete Ecommerce",
     highlight: false,
     icon: ShieldCheck
   }
@@ -132,29 +152,142 @@ const Pricing = () => {
                   <div className="mb-8">
                     <div className="flex items-baseline gap-1">
                       <span className="text-4xl font-bold">
-                        ${plan.price.toLocaleString('es-MX')}
+                        ${plan.price.toLocaleString("en-US")}
                       </span>
-                      <span className="text-sm font-semibold text-muted-foreground">MXN</span>
+                      <span className="text-sm font-semibold text-muted-foreground">USD</span>
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Pago único de implementación
+                      {plan.name.includes("Ecommerce")
+                        ? "Pago único de implementación + IVA"
+                        : "Pago único de implementación"}
                     </p>
                   </div>
 
-                  <div className="space-y-4">
-                    {plan.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-3 text-sm">
-                        <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                        <span className="text-foreground/80">{feature}</span>
-                      </div>
-                    ))}
-                    {plan.notIncluded.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-3 text-sm text-muted-foreground/50">
-                        <X className="w-4 h-4 shrink-0 mt-0.5" />
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {plan.name.includes("Ecommerce") ? (
+                    <Accordion type="single" collapsible className="w-full">
+                      <AccordionItem value="tienda">
+                        <AccordionTrigger className="text-foreground rounded-lg px-3 hover:bg-gradient-to-r hover:from-primary/10 hover:via-indigo-500/10 hover:to-purple-500/10">
+                          <span className="flex items-center gap-2">
+                            <Check className="w-4 h-4 text-primary" />
+                            <Check className="w-4 h-4 text-primary" />
+                            <span className="text-foreground">Tienda en Shopify</span>
+                          </span>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <div className="space-y-2">
+                            {[
+                              "Configuración inicial de la tienda",
+                              "Instalación y configuración de plantilla profesional estándar",
+                              "Configuración de métodos de pago",
+                              "Configuración de impuestos",
+                              "Configuración básica de envíos",
+                              "Carga inicial de hasta 40 productos",
+                              "Creación de páginas básicas (Inicio, Catálogo, Contacto, Políticas)",
+                              "Configuración básica SEO (títulos y descripciones generales)"
+                            ].map((item) => (
+                              <div key={item} className="flex items-start gap-3 text-sm">
+                                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                                <span className="text-foreground">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="crm">
+                        <AccordionTrigger>CRM en Kommo</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="space-y-2">
+                            {[
+                              "1 usuario Kommo – Plan anual",
+                              "Configuración inicial del entorno",
+                              "Creación de 1 pipeline ecommerce",
+                              "Integración automática tienda → CRM",
+                              "Automatización básica de seguimiento",
+                              "Configuración de tareas automáticas por etapa"
+                            ].map((item) => (
+                              <div key={item} className="flex items-start gap-3 text-sm">
+                                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                                <span className="text-foreground">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="logistica">
+                        <AccordionTrigger>Integración logística</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="space-y-2">
+                            {[
+                              "Integración con Envia",
+                              "Configuración básica de reglas de envío",
+                              "Pruebas operativas de despacho"
+                            ].map((item) => (
+                              <div key={item} className="flex items-start gap-3 text-sm">
+                                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                                <span className="text-foreground">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="infraestructura">
+                        <AccordionTrigger>Infraestructura digital</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="space-y-2">
+                            {[
+                              "Dominio web incluido (1 año)",
+                              "5 cuentas de correo corporativo",
+                              "Configuración técnica inicial"
+                            ].map((item) => (
+                              <div key={item} className="flex items-start gap-3 text-sm">
+                                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                                <span className="text-foreground">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="capacitacion">
+                        <AccordionTrigger>Capacitación y acompañamiento</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="space-y-2">
+                            {[
+                              "16 horas de capacitación estratégica",
+                              "Uso de tienda",
+                              "Gestión de pedidos",
+                              "Uso de CRM",
+                              "Flujo operativo completo",
+                              "Sesiones distribuidas durante el proceso de implementación"
+                            ].map((item) => (
+                              <div key={item} className="flex items-start gap-3 text-sm">
+                                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                                <span className="text-foreground">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  ) : (
+                    <div className="space-y-4">
+                      {plan.features.map((feature, i) => (
+                        <div key={i} className="flex items-start gap-3 text-sm">
+                          <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                          <span className="text-foreground/80">{feature}</span>
+                        </div>
+                      ))}
+                      {plan.notIncluded.map((feature, i) => (
+                        <div key={i} className="flex items-start gap-3 text-sm text-muted-foreground/50">
+                          <X className="w-4 h-4 shrink-0 mt-0.5" />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
                 
                 <CardFooter>

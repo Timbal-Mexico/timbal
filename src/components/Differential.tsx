@@ -71,6 +71,9 @@ const Differential = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<typeof problems[number] | null>(null);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const SLIDE_DURATION = 8000;
 
   const onOpen = (p: typeof problems[number]) => {
     setSelected(p);
@@ -78,16 +81,53 @@ const Differential = () => {
   };
 
   useEffect(() => {
-    if (!carouselApi || open) return;
-    const id = setInterval(() => {
+    if (!carouselApi) return;
+
+    const onSelect = () => {
       try {
-        carouselApi.scrollNext();
+        const index = carouselApi.selectedScrollSnap();
+        setActiveIndex(index);
+        setProgress(0);
       } catch {
         // noop
       }
-    }, 3500);
+    };
+
+    onSelect();
+    carouselApi.on("select", onSelect);
+
+    return () => {
+      try {
+        carouselApi.off("select", onSelect);
+      } catch {
+        // noop
+      }
+    };
+  }, [carouselApi]);
+
+  useEffect(() => {
+    if (!carouselApi || open) return;
+
+    const start = Date.now();
+
+    const tick = () => {
+      const elapsed = Date.now() - start;
+      const ratio = Math.min(elapsed / SLIDE_DURATION, 1);
+      setProgress(ratio * 100);
+
+      if (ratio === 1) {
+        try {
+          carouselApi.scrollNext();
+        } catch {
+          // noop
+        }
+      }
+    };
+
+    tick();
+    const id = setInterval(tick, 100);
     return () => clearInterval(id);
-  }, [carouselApi, open]);
+  }, [carouselApi, open, activeIndex, SLIDE_DURATION]);
 
   return (
     <section id="diferencial" className="py-24 bg-muted/30 relative overflow-hidden">
@@ -110,44 +150,95 @@ const Differential = () => {
           </motion.div>
         </div>
 
-        {/* Problemáticas que resolvemos */}
+        {/* Problemática profesional */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-20"
+          className="mb-20 grid lg:grid-cols-2 gap-10 items-center"
         >
-          <div className="relative">
-            <Carousel opts={{ align: "start", loop: true }} setApi={setCarouselApi}>
-              <CarouselContent>
-                {problems.map((p) => (
-                  <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
-                    <Card className="h-full border-border/60 bg-primary/5 backdrop-blur-sm hover:border-primary/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20">
-                      <CardContent className="p-6 flex flex-col gap-4 h-full items-center text-center">
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
-                          {p.icon && <p.icon className="w-6 h-6" />}
-                        </div>
-                        <h4 className="text-xl font-semibold text-foreground leading-snug">
-                          {p.question}
-                        </h4>
-                        <div className="mt-auto pt-2">
-                          <Button
-                            size="sm"
-                            className="rounded-full px-4 h-9 gradient-hero text-primary-foreground shadow-soft hover:opacity-90"
-                            onClick={() => onOpen(p)}
-                          >
-                            Ver Solucion
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+          <div className="relative order-1 lg:order-none z-20 lg:-mr-16">
+            <div className="absolute -top-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-3xl" aria-hidden="true" />
+            <div className="relative rounded-3xl overflow-hidden border border-border/60 bg-gradient-to-br from-background via-background to-primary/10 lg:scale-110 lg:-translate-y-4">
+              <img
+                src="/images/chica_timbal.png"
+                alt="Ejecutiva de Timbal analizando reportes en una sala de juntas."
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <div
+            aria-label="Carrusel de problemáticas profesionales"
+            className="order-2 lg:order-none relative z-10 lg:pl-12"
+          >
+            <div className="relative">
+              <Carousel opts={{ align: "start", loop: true }} setApi={setCarouselApi}>
+                <CarouselContent>
+                  {problems.map((p) => (
+                    <CarouselItem key={p.id} className="basis-full">
+                      <Card className="h-full border-border/70 bg-primary/5 backdrop-blur-sm transition-all duration-300">
+                        <CardContent className="p-6 flex flex-col gap-4 h-full">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                              {p.icon && <p.icon className="w-6 h-6" aria-hidden="true" />}
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              Problemática {activeIndex + 1} de {problems.length}
+                            </p>
+                          </div>
+                          <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-snug mt-2">
+                            {p.question}
+                          </h3>
+                          {/* <p className="text-lg text-muted-foreground">
+                            Tu equipo vive estas situaciones todos los días. Entenderlas a fondo es el primer paso
+                            para diseñar un sistema comercial que deje de perder oportunidades.
+                          </p> */}
+                          <div className="mt-4">
+                            <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden" aria-hidden="true">
+                              <div
+                                className="h-full bg-primary transition-[width] duration-100 ease-linear"
+                                style={{ width: `${progress}%` }}
+                              />
+                            </div>
+                            <p className="sr-only">
+                              La diapositiva cambiará automáticamente cada 8 segundos.
+                            </p>
+                          </div>
+                          <div className="mt-4 flex justify-end">
+                            <Button
+                              size="sm"
+                              className="rounded-full px-4 h-9 gradient-hero text-primary-foreground shadow-soft hover:opacity-90"
+                              onClick={() => onOpen(p)}
+                            >
+                              Ver Solución
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious aria-label="Problemática anterior" />
+                <CarouselNext aria-label="Siguiente problemática" />
+              </Carousel>
+            </div>
+            <div className="mt-4 flex items-center justify-center gap-2" aria-hidden="false">
+              {problems.map((p, index) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => carouselApi?.scrollTo(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeIndex === index ? "w-6 bg-primary" : "w-2 bg-muted-foreground/40"
+                  }`}
+                  aria-label={`Ir a problemática ${index + 1}`}
+                  aria-current={activeIndex === index}
+                />
+              ))}
+            </div>
           </div>
         </motion.div>
 
