@@ -4,7 +4,6 @@ import { Check, X, ArrowRight, Zap, Star, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "./ui/accordion";
-import { Switch } from "./ui/switch";
 import { useToast } from "@/hooks/use-toast";
 
 const plans = [
@@ -85,7 +84,7 @@ const plans = [
   }
 ];
 
-const WHATSAPP_NUMBER = "523323848561";
+const WHATSAPP_NUMBER = "523328712448";
 
 const USD_API_PRIMARY = "https://api.exchangerate-api.com/v4/latest/MXN";
 const USD_API_FALLBACK = "https://open.er-api.com/v6/latest/MXN";
@@ -94,9 +93,12 @@ function round2(n: number) {
   return Math.round(n * 100) / 100;
 }
 
-function formatMoney(value: number, currency: "MXN" | "USD") {
+function formatMoney(value: number, currency: "MXN" | "USD" | "EUR") {
   if (currency === "USD") {
     return `US$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+  if (currency === "EUR") {
+    return `€${value.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
   return `$${value.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
@@ -114,10 +116,12 @@ const buildWhatsAppUrl = (serviceName: string) => {
 
 const Pricing = () => {
   const { toast } = useToast();
-  const [currency, setCurrency] = useState<"MXN" | "USD">(
-    (typeof window !== "undefined" && (localStorage.getItem("currency_preference") as "MXN" | "USD")) || "MXN",
+  const [currency, setCurrency] = useState<"MXN" | "USD" | "EUR">(
+    (typeof window !== "undefined" && (localStorage.getItem("currency_preference") as "MXN" | "USD" | "EUR")) ||
+      "MXN",
   );
   const [usdRate, setUsdRate] = useState<number | null>(null);
+  const [eurRate, setEurRate] = useState<number | null>(null);
   const [loadingRate, setLoadingRate] = useState(false);
 
   async function fetchUsdRate() {
@@ -126,18 +130,34 @@ const Pricing = () => {
       const r1 = await fetch(USD_API_PRIMARY);
       if (!r1.ok) throw new Error("primary");
       const d1 = await r1.json();
-      const rate = d1?.rates?.USD;
-      if (typeof rate !== "number") throw new Error("invalid");
-      setUsdRate(rate);
+      const rateUsd = d1?.rates?.USD ?? d1?.rates?.usd;
+      const rateEur = d1?.rates?.EUR ?? d1?.rates?.eur;
+      if (typeof rateUsd === "number") {
+        setUsdRate(rateUsd);
+      }
+      if (typeof rateEur === "number") {
+        setEurRate(rateEur);
+      }
+      if (typeof rateUsd !== "number" && typeof rateEur !== "number") {
+        throw new Error("invalid");
+      }
       return true;
     } catch {
       try {
         const r2 = await fetch(USD_API_FALLBACK);
         if (!r2.ok) throw new Error("fallback");
         const d2 = await r2.json();
-        const rate2 = d2?.rates?.USD ?? d2?.rates?.usd;
-        if (typeof rate2 !== "number") throw new Error("invalid");
-        setUsdRate(rate2);
+        const rateUsd2 = d2?.rates?.USD ?? d2?.rates?.usd;
+        const rateEur2 = d2?.rates?.EUR ?? d2?.rates?.eur;
+        if (typeof rateUsd2 === "number") {
+          setUsdRate(rateUsd2);
+        }
+        if (typeof rateEur2 === "number") {
+          setEurRate(rateEur2);
+        }
+        if (typeof rateUsd2 !== "number" && typeof rateEur2 !== "number") {
+          throw new Error("invalid");
+        }
         return true;
       } catch {
         toast({
@@ -156,16 +176,19 @@ const Pricing = () => {
   }
 
   useEffect(() => {
-    if (currency === "USD" && usdRate == null) {
+    if ((currency === "USD" && usdRate == null) || (currency === "EUR" && eurRate == null)) {
       fetchUsdRate();
     }
   }, [currency]);
 
-  const handleToggle = async (checked: boolean) => {
-    const next = checked ? "USD" : "MXN";
-    if (next === "USD") {
-      const ok = usdRate == null ? await fetchUsdRate() : true;
-      if (!ok) return;
+  const handleCurrencyChange = async (next: "MXN" | "USD" | "EUR") => {
+    if (next !== "MXN") {
+      const needsUsd = next === "USD" && usdRate == null;
+      const needsEur = next === "EUR" && eurRate == null;
+      if (needsUsd || needsEur) {
+        const ok = await fetchUsdRate();
+        if (!ok) return;
+      }
     }
     setCurrency(next);
     localStorage.setItem("currency_preference", next);
@@ -174,6 +197,9 @@ const Pricing = () => {
   function displayFromMXN(mxn: number) {
     if (currency === "USD" && typeof usdRate === "number") {
       return round2(mxn * usdRate);
+    }
+    if (currency === "EUR" && typeof eurRate === "number") {
+      return round2(mxn * eurRate);
     }
     return round2(mxn);
   }
@@ -202,10 +228,23 @@ const Pricing = () => {
             </p>
           </motion.div>
           <div className="mt-6 flex items-center justify-center gap-3">
-            <span className="text-sm text-muted-foreground">MXN</span>
-            <Switch checked={currency === "USD"} onCheckedChange={handleToggle} />
-            <span className="text-sm text-muted-foreground">USD</span>
-            {loadingRate && currency === "USD" && (
+            <div className="inline-flex items-center rounded-full border border-border/60 bg-background/60 p-1 text-xs">
+              {(["MXN", "USD", "EUR"] as const).map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => handleCurrencyChange(c)}
+                  className={`px-3 py-1 rounded-full transition-colors ${
+                    currency === c
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted/60"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+            {loadingRate && (currency === "USD" || currency === "EUR") && (
               <span className="text-xs text-muted-foreground">Actualizando tipo de cambio…</span>
             )}
           </div>

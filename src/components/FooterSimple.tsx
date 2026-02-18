@@ -5,10 +5,10 @@ const FooterSimple = () => {
   const currentYear = new Date().getFullYear();
 
   const contactInfo = {
-    whatsapp: "https://wa.me/523323848561",
+    whatsapp: "https://wa.me/523328712448",
     linkedin: "https://linkedin.com/company/timbal",
     email: "contacto@timbal.com.mx",
-    phone: "+52 1 33 2384 8561",
+    phone: "+52 33 2871 2448",
     address: "Guadalajara, Jalisco, México",
   };
 
