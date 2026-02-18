@@ -109,6 +109,54 @@
 }
 
 @layer utilities {
+  /* Carousel responsive sizing (Desktop & Mobile)
+     - Desktop (>= 1024px): limit height to 598px to align with the reference image
+     - Mobile (< 1024px): occupy full viewport width, prevent horizontal overflow
+     - Ensure proportional scaling without distortion, include padding/border via box-sizing
+  */
+  .carousel-item-resp {
+    box-sizing: border-box;          /* Include padding/border in size calculations */
+    width: 100%;                     /* Mobile-first: fill available container width */
+    overflow: hidden;                /* Avoid horizontal scroll on small screens */
+  }
+
+  @media (min-width: 1024px) {
+    .carousel-item-resp {
+      width: auto;                   /* Desktop: content defines width alongside the grid */
+      max-height: 598px;             /* Desktop: cap height to match reference image */
+    }
+  }
+
+  /* Orientation-specific refinements for mobile */
+  @media (max-width: 1023px) and (orientation: portrait) {
+    .carousel-item-resp {
+      max-height: 100vh;             /* Portrait: never exceed viewport height */
+      height: 100%;                  /* Fill available vertical space from parent */
+    }
+  }
+
+  @media (max-width: 1023px) and (orientation: landscape) {
+    .carousel-item-resp {
+      max-height: 100vh;             /* Landscape: keep within viewport */
+      height: auto;                  /* Allow content to define height without overflow */
+    }
+  }
+
+  /* Mobile full-bleed carousel container:
+     - On mobile, extend to the full viewport width by neutralizing the page padding
+     - On desktop, revert to normal container behavior
+  */
+  .carousel-mobile-screen {
+    overflow: hidden;
+  }
+  @media (max-width: 1023px) {
+    .carousel-mobile-screen {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);  /* Bleed to the left edge of the viewport */
+      margin-right: calc(50% - 50vw); /* Bleed to the right edge of the viewport */
+    }
+  }
+
   .gradient-hero {
     background: var(--gradient-hero);
   }

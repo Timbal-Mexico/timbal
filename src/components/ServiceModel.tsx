@@ -1,14 +1,17 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Check, X, ArrowRight, Zap, Star, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "./ui/accordion";
+import { Switch } from "./ui/switch";
+import { useToast } from "@/hooks/use-toast";
 
 const plans = [
   {
-    name: "Kommo Starter (Servicio Base)",
+    name: "Kommo Starter",
     description: "Servicio base para implementar Kommo CRM en tu operación.",
-    price: 1390,
+    price: 25000,
     features: [
       "Kommo CRM",
       "2 usuarios - Plan anual",
@@ -25,7 +28,7 @@ const plans = [
   {
     name: "Kommo Advance",
     description: "Service core para escalar tu operación comercial con Kommo.",
-    price: 3060,
+    price: 55000,
     features: [
       "5 usuarios Kommo - Plan anual",
       "Configuración completa del entorno",
@@ -47,7 +50,7 @@ const plans = [
   {
     name: "Ecommerce 360 Starter",
     description: "Implementación de tienda Shopify integrada con Kommo y logística.",
-    price: 2110,
+    price: 38000,
     features: [
       "Tienda en Shopify",
       "Configuración inicial de la tienda",
@@ -84,6 +87,20 @@ const plans = [
 
 const WHATSAPP_NUMBER = "523323848561";
 
+const USD_API_PRIMARY = "https://api.exchangerate-api.com/v4/latest/MXN";
+const USD_API_FALLBACK = "https://open.er-api.com/v6/latest/MXN";
+
+function round2(n: number) {
+  return Math.round(n * 100) / 100;
+}
+
+function formatMoney(value: number, currency: "MXN" | "USD") {
+  if (currency === "USD") {
+    return `US$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+  return `$${value.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
 const buildWhatsAppUrl = (serviceName: string) => {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`;
   const params = new URLSearchParams({
@@ -96,6 +113,71 @@ const buildWhatsAppUrl = (serviceName: string) => {
 };
 
 const Pricing = () => {
+  const { toast } = useToast();
+  const [currency, setCurrency] = useState<"MXN" | "USD">(
+    (typeof window !== "undefined" && (localStorage.getItem("currency_preference") as "MXN" | "USD")) || "MXN",
+  );
+  const [usdRate, setUsdRate] = useState<number | null>(null);
+  const [loadingRate, setLoadingRate] = useState(false);
+
+  async function fetchUsdRate() {
+    setLoadingRate(true);
+    try {
+      const r1 = await fetch(USD_API_PRIMARY);
+      if (!r1.ok) throw new Error("primary");
+      const d1 = await r1.json();
+      const rate = d1?.rates?.USD;
+      if (typeof rate !== "number") throw new Error("invalid");
+      setUsdRate(rate);
+      return true;
+    } catch {
+      try {
+        const r2 = await fetch(USD_API_FALLBACK);
+        if (!r2.ok) throw new Error("fallback");
+        const d2 = await r2.json();
+        const rate2 = d2?.rates?.USD ?? d2?.rates?.usd;
+        if (typeof rate2 !== "number") throw new Error("invalid");
+        setUsdRate(rate2);
+        return true;
+      } catch {
+        toast({
+          title: "Error al obtener tipo de cambio",
+          description: "Mostrando precios en MXN.",
+        });
+        setCurrency("MXN");
+        localStorage.setItem("currency_preference", "MXN");
+        return false;
+      } finally {
+        setLoadingRate(false);
+      }
+    } finally {
+      setLoadingRate(false);
+    }
+  }
+
+  useEffect(() => {
+    if (currency === "USD" && usdRate == null) {
+      fetchUsdRate();
+    }
+  }, [currency]);
+
+  const handleToggle = async (checked: boolean) => {
+    const next = checked ? "USD" : "MXN";
+    if (next === "USD") {
+      const ok = usdRate == null ? await fetchUsdRate() : true;
+      if (!ok) return;
+    }
+    setCurrency(next);
+    localStorage.setItem("currency_preference", next);
+  };
+
+  function displayFromMXN(mxn: number) {
+    if (currency === "USD" && typeof usdRate === "number") {
+      return round2(mxn * usdRate);
+    }
+    return round2(mxn);
+  }
+
   return (
     <section id="pricing" className="py-24 bg-background relative">
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
@@ -119,6 +201,14 @@ const Pricing = () => {
               Implementación profesional de sistemas que se pagan solos con los resultados que generan.
             </p>
           </motion.div>
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <span className="text-sm text-muted-foreground">MXN</span>
+            <Switch checked={currency === "USD"} onCheckedChange={handleToggle} />
+            <span className="text-sm text-muted-foreground">USD</span>
+            {loadingRate && currency === "USD" && (
+              <span className="text-xs text-muted-foreground">Actualizando tipo de cambio…</span>
+            )}
+          </div>
         </div>
 
         {/* Cards Grid */}
@@ -150,16 +240,14 @@ const Pricing = () => {
                 
                 <CardContent className="flex-grow">
                   <div className="mb-8">
-                    <div className="flex items-baseline gap-1">
+                    <div className="flex items-baseline gap-2">
                       <span className="text-4xl font-bold">
-                        ${plan.price.toLocaleString("en-US")}
+                        {formatMoney(displayFromMXN(plan.price), currency)}
                       </span>
-                      <span className="text-sm font-semibold text-muted-foreground">USD</span>
+                      <span className="text-sm font-semibold text-muted-foreground">{currency}</span>
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      {plan.name.includes("Ecommerce")
-                        ? "Pago único de implementación + IVA"
-                        : "Pago único de implementación"}
+                      {plan.name.includes("Ecommerce") ? "Pago único de implementación + IVA" : "Pago único de implementación"}
                     </p>
                   </div>
 
@@ -168,8 +256,7 @@ const Pricing = () => {
                       <AccordionItem value="tienda">
                         <AccordionTrigger className="text-foreground rounded-lg px-3 hover:bg-gradient-to-r hover:from-primary/10 hover:via-indigo-500/10 hover:to-purple-500/10">
                           <span className="flex items-center gap-2">
-                            <Check className="w-4 h-4 text-primary" />
-                            <Check className="w-4 h-4 text-primary" />
+                            <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                             <span className="text-foreground">Tienda en Shopify</span>
                           </span>
                         </AccordionTrigger>
@@ -195,7 +282,12 @@ const Pricing = () => {
                       </AccordionItem>
 
                       <AccordionItem value="crm">
-                        <AccordionTrigger>CRM en Kommo</AccordionTrigger>
+                        <AccordionTrigger className="text-foreground rounded-lg px-3 hover:bg-gradient-to-r hover:from-primary/10 hover:via-indigo-500/10 hover:to-purple-500/10">
+                          <span className="flex items-center gap-2">
+                            <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <span className="text-foreground">CRM en Kommo</span>
+                          </span>
+                        </AccordionTrigger>
                         <AccordionContent>
                           <div className="space-y-2">
                             {[
@@ -216,7 +308,12 @@ const Pricing = () => {
                       </AccordionItem>
 
                       <AccordionItem value="logistica">
-                        <AccordionTrigger>Integración logística</AccordionTrigger>
+                        <AccordionTrigger className="text-foreground rounded-lg px-3 hover:bg-gradient-to-r hover:from-primary/10 hover:via-indigo-500/10 hover:to-purple-500/10">
+                          <span className="flex items-center gap-2">
+                            <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <span className="text-foreground">Integración logística</span>
+                          </span>
+                        </AccordionTrigger>
                         <AccordionContent>
                           <div className="space-y-2">
                             {[
@@ -234,7 +331,12 @@ const Pricing = () => {
                       </AccordionItem>
 
                       <AccordionItem value="infraestructura">
-                        <AccordionTrigger>Infraestructura digital</AccordionTrigger>
+                        <AccordionTrigger className="text-foreground rounded-lg px-3 hover:bg-gradient-to-r hover:from-primary/10 hover:via-indigo-500/10 hover:to-purple-500/10">
+                          <span className="flex items-center gap-2">
+                            <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <span className="text-foreground">Infraestructura digital</span>
+                          </span>
+                        </AccordionTrigger>
                         <AccordionContent>
                           <div className="space-y-2">
                             {[
@@ -252,7 +354,12 @@ const Pricing = () => {
                       </AccordionItem>
 
                       <AccordionItem value="capacitacion">
-                        <AccordionTrigger>Capacitación y acompañamiento</AccordionTrigger>
+                        <AccordionTrigger className="text-foreground rounded-lg px-3 hover:bg-gradient-to-r hover:from-primary/10 hover:via-indigo-500/10 hover:to-purple-500/10">
+                          <span className="flex items-center gap-2">
+                            <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <span className="text-foreground">Capacitación y acompañamiento</span>
+                          </span>
+                        </AccordionTrigger>
                         <AccordionContent>
                           <div className="space-y-2">
                             {[

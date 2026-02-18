@@ -5,6 +5,7 @@ import { ArrowUp, Star } from "lucide-react";
 import NavbarSimple from "@/components/NavbarSimple";
 import HeroNew from "@/components/HeroNew";
 import Differential from "@/components/Differential";
+import ClientsLogos from "@/components/ClientsLogos";
 import ServiceModel from "@/components/ServiceModel";
 import FooterSimple from "@/components/FooterSimple";
 
@@ -74,25 +75,39 @@ const Index = () => {
 
   const testimonials = [
     {
-      name: "Mariana López",
-      role: "Directora Comercial, Retail MX",
-      text: "Pasamos de perseguir leads en WhatsApp a tener todo el proceso controlado en un solo sistema.",
+      name: "Land 4 Fun",
+      role: "Gerente",
+      text: "Lo que más nos gustó de trabajar con Timbal fue que no vendieron un sistema, vendieron una solución. Se involucraron en entender nuestra operación y adaptaron el CRM a nuestra realidad.   -Gerencia Land 4 Fun",
       rating: 5,
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&q=80&auto=format&fit=crop"
+      avatar: "/images/clientes/profiles/landforfun.png"
     },
     {
-      name: "Carlos Hernández",
-      role: "CEO, Grupo Industrial",
-      text: "Por primera vez podemos ver en tiempo real cuánto dinero hay en el pipeline y dónde se está atorando.",
+      name: "CoffeeBreak",
+      role: "Director General",
+      text: "Lo más valioso es que sentimos que forman parte de nuestra empresa. No son un proveedor, son nuestro brazo comercial digital.",
       rating: 5,
-      avatar: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=120&q=80&auto=format&fit=crop"
+      avatar: "/images/clientes/profiles/coffeebreak.png"
     },
     {
-      name: "Ana Rodríguez",
-      role: "Head of Growth, SaaS B2B",
-      text: "Timbal nos ayudó a conectar marketing, ventas y servicio en un mismo flujo de operación.",
-      rating: 4,
-      avatar: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=120&q=80&auto=format&fit=crop"
+      name: "Mamalov",
+      role: "Director General",
+      text: "Teníamos mensajes. No teníamos control. Timbal unificó todos nuestros canales digitales en un solo sistema, nos dio estructura y trazabilidad. Hoy ninguna conversación se pierde.",
+      rating: 5,
+      avatar: "/images/clientes/profiles/mamalov.png"
+    },
+     {
+      name: "Baroc",
+      role: "Director General",
+      text: "Con Timbal logramos identificar claramente qué dudas eran más frecuentes, organizar la atención y dar respuestas más rápidas y precisas.",
+      rating: 5,
+      avatar: "/images/clientes/profiles/baroc.png"
+    },
+     {
+      name: "Expoceramicas",
+      role: "Director General",
+      text: "Hoy gestionamos procesos de reclutamiento con mayor orden, trazabilidad y seguimiento puntual de candidatos. Además, estructuramos un sistema para medir la experiencia de nuestros clientes y detectar áreas de mejora en tiempo real. Timbal nos ayudó a convertir procesos operativos en procesos medibles.",
+      rating: 5,
+      avatar: "/images/clientes/profiles/expoceramicas.png"
     },
   ];
 
@@ -101,6 +116,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <NavbarSimple />
       <HeroNew />
+      <ClientsLogos />
       <Differential />
       <ServiceModel />
       <section id="testimonios" className="py-24 bg-muted/20">
