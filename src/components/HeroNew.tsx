@@ -12,7 +12,7 @@ const HeroNew = () => {
     if (window.Calendly) {
       // @ts-ignore
       window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/timbalsoluciones/30min'
+        url: 'https://calendly.com/timbalcomunicaciones/30min'
       });
       return false;
     }
