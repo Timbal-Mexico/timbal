@@ -1,17 +1,40 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "./ui/button";
 import { ParticleNetwork } from "./ui/particle-network";
+import { useEffect } from "react";
 
 const HeroNew = () => {
   const { scrollY } = useScroll();
   const backgroundY = useTransform(scrollY, [0, 500], [0, 100]); // 0.2x speed for background
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  const openCalendly = () => {
+    // @ts-ignore
+    if (window.Calendly) {
+      // @ts-ignore
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/timbalsoluciones/30min'
+      });
+      return false;
     }
+    return true;
   };
+
+  useEffect(() => {
+    const head = document.querySelector('head');
+    const script = document.createElement('script');
+    script.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js');
+    head?.appendChild(script);
+
+    const style = document.createElement('link');
+    style.setAttribute('rel', 'stylesheet');
+    style.setAttribute('href', 'https://assets.calendly.com/assets/external/widget.css');
+    head?.appendChild(style);
+
+    return () => {
+      head?.removeChild(script);
+      head?.removeChild(style);
+    }
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -87,7 +110,7 @@ const HeroNew = () => {
             <Button
               size="lg"
               className="group relative overflow-hidden rounded-full h-14 px-10 text-lg font-semibold text-primary-foreground bg-gradient-to-r from-primary via-secondary to-primary shadow-[0_0_30px_rgba(129,140,248,0.5)] transition-all duration-500 hover:shadow-[0_0_50px_rgba(129,140,248,0.8)] hover:scale-105 focus-visible:scale-105"
-              onClick={() => scrollToSection("contacto")}
+              onClick={openCalendly}
             >
               <span className="relative z-10 flex items-center gap-2">
                 Agenda una llamada
