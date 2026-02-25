@@ -268,7 +268,26 @@ const Pricing = () => {
                 </div>
               )}
               
-              <Card className={`h-full flex flex-col transition-all duration-300 will-change-transform transform-gpu overflow-visible ${plan.highlight ? "border-primary shadow-2xl bg-card" : "border-border hover:border-primary/60 hover:shadow-2xl bg-card/50"}`}>
+              {plan.name.includes("Ecommerce") && (
+                <div className="absolute top-4 right-4 md:-top-5 md:-right-5 z-40 pointer-events-none transform md:rotate-12 transition-transform duration-300 group-hover:scale-105">
+                   <div className="relative flex items-center justify-center h-28 w-28">
+                      <div className="absolute inset-0 bg-red-500 rounded-full blur-md opacity-40 animate-pulse"></div>
+                      <div className="relative h-24 w-24 bg-gradient-to-br from-red-600 to-pink-600 rounded-full flex flex-col items-center justify-center text-white shadow-xl border-4 border-white/20 p-2">
+                        <span className="text-xs font-bold uppercase leading-tight tracking-wider">Aprovecha</span>
+                        <span className="text-lg font-black uppercase leading-none my-0.5 tracking-tighter scale-110">Todo</span>
+                        <span className="text-xs font-bold uppercase leading-tight tracking-wider">Marzo</span>
+                      </div>
+                   </div>
+                </div>
+              )}
+              
+              <Card className={`h-full flex flex-col transition-all duration-300 will-change-transform transform-gpu overflow-visible relative
+                ${plan.name.includes("Ecommerce") 
+                  ? "border-primary/50 shadow-2xl bg-purple-500/5 hover:bg-purple-500/10 hover:shadow-purple-500/20 group-hover:border-transparent group-hover:ring-[3px] group-hover:ring-gradient-to-r group-hover:from-purple-500 group-hover:via-pink-500 group-hover:to-red-500" 
+                  : plan.highlight 
+                    ? "border-primary shadow-2xl bg-card" 
+                    : "border-border hover:border-primary/60 hover:shadow-2xl bg-card/50"
+                }`}>
                 <CardHeader>
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${plan.highlight ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}>
                     <plan.icon className="w-6 h-6" />
@@ -278,17 +297,19 @@ const Pricing = () => {
                 </CardHeader>
                 
                 <CardContent className="flex-grow">
-                 {/*} <div className="mb-8">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-4xl font-bold">
-                        {formatMoney(displayFromMXN(plan.price), currency)}
-                      </span>
-                      <span className="text-sm font-semibold text-muted-foreground">{currency}</span>
+                  {plan.name.includes("Ecommerce") && (
+                    <div className="mb-8">
+                       <div className="flex items-baseline gap-2">
+                        <span className="text-4xl font-bold">
+                          {formatMoney(displayFromMXN(plan.price), currency)}
+                        </span>
+                        <span className="text-sm font-semibold text-muted-foreground">{currency}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Pago único de implementación + IVA
+                      </p>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {plan.name.includes("Ecommerce") ? "Pago único de implementación + IVA" : "Pago único de implementación"}
-                    </p>
-                  </div>*/}
+                  )}
 
                   {plan.name.includes("Ecommerce") ? (
                     <Accordion type="single" collapsible className="w-full">
