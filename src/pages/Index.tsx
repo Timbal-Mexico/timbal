@@ -118,7 +118,7 @@ const Index = () => {
       <HeroNew />
       <ClientsLogos />
       <Differential />
- 
+      <ServiceModel />
       <section id="testimonios" className="py-24 bg-muted/20">
         <div className="container mx-auto px-6">
           <motion.div

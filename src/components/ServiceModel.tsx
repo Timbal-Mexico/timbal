@@ -227,7 +227,7 @@ const Pricing = () => {
               Implementación profesional de sistemas que se pagan solos con los resultados que generan.
             </p>
           </motion.div>
-          <div className="mt-6 flex items-center justify-center gap-3">
+          {/* <div className="mt-6 flex items-center justify-center gap-3">
             <div className="inline-flex items-center rounded-full border border-border/60 bg-background/60 p-1 text-xs">
               {(["MXN", "USD", "EUR"] as const).map((c) => (
                 <button
@@ -244,10 +244,10 @@ const Pricing = () => {
                 </button>
               ))}
             </div>
-            {loadingRate && (currency === "USD" || currency === "EUR") && (
+          loadingRate && (currency === "USD" || currency === "EUR") && (
               <span className="text-xs text-muted-foreground">Actualizando tipo de cambio…</span>
-            )}
-          </div>
+            )} 
+          </div>*/ }
         </div>
 
         {/* Cards Grid */}
@@ -278,7 +278,7 @@ const Pricing = () => {
                 </CardHeader>
                 
                 <CardContent className="flex-grow">
-                  <div className="mb-8">
+                 {/*} <div className="mb-8">
                     <div className="flex items-baseline gap-2">
                       <span className="text-4xl font-bold">
                         {formatMoney(displayFromMXN(plan.price), currency)}
@@ -288,7 +288,7 @@ const Pricing = () => {
                     <p className="text-xs text-muted-foreground mt-1">
                       {plan.name.includes("Ecommerce") ? "Pago único de implementación + IVA" : "Pago único de implementación"}
                     </p>
-                  </div>
+                  </div>*/}
 
                   {plan.name.includes("Ecommerce") ? (
                     <Accordion type="single" collapsible className="w-full">

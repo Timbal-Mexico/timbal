@@ -44,6 +44,7 @@ const NavbarSimple = () => {
   const navLinks = [
     { name: "Inicio", id: "inicio" },
     { name: "Soluciones", id: "diferencial" },
+    { name: "Precios", id: "pricing" },
     { name: "Testimonios", id: "testimonios" },
   ];
 
