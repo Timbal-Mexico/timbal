@@ -57,6 +57,22 @@ const HeroNew = () => {
     },
   };
 
+  const glowVariants = {
+    animate: {
+      textShadow: [
+        "0 0 0px rgba(124, 58, 237, 0)",
+        "0 0 20px rgba(124, 58, 237, 0.6)",
+        "0 0 0px rgba(124, 58, 237, 0)"
+      ],
+      scale: [1, 1.1, 1],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
     <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center bg-background px-6 py-24">
       {/* Background Graphic (Technology/Business/CRM Theme) */}
@@ -92,10 +108,15 @@ const HeroNew = () => {
 
             </motion.span>
             <motion.span className="block sm:inline-block">
-              <span className="font-bold pb-2 inline-block" style={{ color: 'hsl(270 41% 40%)'  }}>
+              <motion.span 
+                className="text-gradient font-bold pb-2 inline-block" 
+                style={{ backgroundImage: 'linear-gradient(135deg, #1E3A8A 0%, #7C3AED 100%)' }}
+                animate="animate"
+                variants={glowVariants}
+              >
                 <motion.span variants={itemVariants} className="inline-block mr-3">Más</motion.span>
                 <motion.span variants={itemVariants} className="inline-block">Ventas.</motion.span>
-              </span>
+              </motion.span>
             </motion.span>
           </h1>
 
