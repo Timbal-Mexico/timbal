@@ -371,13 +371,13 @@ const Pricing = () => {
                <CardHeader className="pb-4">
                  <div className="flex items-center justify-between mb-4">
                    <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
-                     <img src="/images/kommo_logo_icon.png" alt="Kommo" className="w-8 h-8 object-contain" />
+                     <img src="/images/partners/komo-icon.webp" alt="Kommo" className="w-8 h-8 object-contain" />
                    </div>
-                   <div className="bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                     <Star className="w-3 h-3 fill-current" /> Partner Oficial
+                   <div className="tracking-wider flex items-center gap-1">
+                     <img src="/images/partners/kommo_partner_dark.png" alt="Kommo" className="w-14 h-8 object-contain" />
                    </div>
                  </div>
-                 <CardTitle className="text-xl font-bold">Licencia Kommo</CardTitle>
+                 <CardTitle className="text-xl font-bold">Kommo CRM</CardTitle>
                  <CardDescription className="text-xs">
                    Contrata tu licencia oficial directamente con nosotros.
                  </CardDescription>
