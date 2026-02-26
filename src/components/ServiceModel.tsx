@@ -80,7 +80,7 @@ const plans = [
   }
 ];
 
-const WHATSAPP_NUMBER = "523328712448";
+const WHATSAPP_NUMBER = "5213334474747";
 
 const USD_API_PRIMARY = "https://api.exchangerate-api.com/v4/latest/MXN";
 const USD_API_FALLBACK = "https://open.er-api.com/v6/latest/MXN";

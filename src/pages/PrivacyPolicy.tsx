@@ -37,7 +37,7 @@ const PrivacyPolicy = () => {
               </p>
               <ul className="list-disc list-inside space-y-2 mt-4">
                 <li>Correo: contacto@timbal.com.mx</li>
-                <li>WhatsApp: +52 33 2871 2448</li>
+                <li>WhatsApp: +52 1 33 3447 4747</li>
               </ul>
             </section>
 
@@ -213,7 +213,7 @@ const PrivacyPolicy = () => {
                   <strong className="text-foreground">Timbal Comunicaciones</strong>
                 </p>
                 <p>Correo: contacto@timbal.com.mx</p>
-                <p>WhatsApp: +52 33 2871 2448</p>
+                <p>WhatsApp: +52 1 33 3447 4747</p>
               </div>
             </section>
 
