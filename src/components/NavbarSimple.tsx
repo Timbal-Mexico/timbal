@@ -79,7 +79,7 @@ const NavbarSimple = () => {
                 className="gradient-hero text-primary-foreground border-0 shadow-soft hover:opacity-90 transition-opacity"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Diagnóstico
+                AGENDA UNA DEMO
               </Button>
             </div>
 
@@ -115,7 +115,7 @@ const NavbarSimple = () => {
                 className="w-full gradient-hero text-primary-foreground border-0 hover:opacity-90 transition-opacity"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Agendar diagnóstico
+                AGENDA UNA DEMO
               </Button>
             </motion.div>
           )}

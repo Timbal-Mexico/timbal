@@ -1,8 +1,23 @@
-import { Linkedin, MessageCircle, Mail, Phone, Facebook, Instagram } from "lucide-react";
+import { Linkedin, MessageCircle, Mail, Phone, Facebook, Instagram, ArrowUp } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const FooterSimple = () => {
   const currentYear = new Date().getFullYear();
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const contactInfo = {
     whatsapp: "https://wa.me/5213334474747",
@@ -156,6 +171,17 @@ const FooterSimple = () => {
           </div>
         </div>
       </div>
+      
+      {/* Scroll to Top Button */}
+      <button
+        onClick={scrollToTop}
+        className={`fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all duration-300 transform ${
+          showScrollTop ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
+        }`}
+        aria-label="Volver arriba"
+      >
+        <ArrowUp className="w-6 h-6" />
+      </button>
     </footer>
   );
 };

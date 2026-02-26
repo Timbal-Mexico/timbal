@@ -265,7 +265,7 @@ const PackageModal = ({ pkg, isOpen, onClose, onCalendly }) => {
                 onClick={onCalendly}
                 className="w-full gradient-hero text-primary-foreground border-0 hover:opacity-90 transition-opacity text-lg py-6 group"
               >
-                Agendar diagnóstico
+                AGENDA UNA DEMO
                 <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -420,7 +420,7 @@ const Packages = () => {
               onClick={openCalendly}
               className="gradient-hero text-primary-foreground border-0 hover:opacity-90 transition-opacity"
             >
-              Agendar diagnóstico gratuito
+              AGENDA UNA DEMO
             </Button>
           </motion.div>
         </div>
@@ -692,7 +692,7 @@ const myPackages = () => {
                   onClick={openCalendly}
                   className={`w-full gradient-hero text-primary-foreground border-0 hover:opacity-90 transition-opacity group`}
                 >
-                  Solicitar información
+                  AGENDA UNA DEMO
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </motion.div>
@@ -761,7 +761,7 @@ const myPackages = () => {
                     onClick={openCalendly}
                     className={`w-full gradient-hero text-primary-foreground border-0 hover:opacity-90 transition-opacity group`}
                   >
-                    Solicitar información
+                    AGENDA UNA DEMO
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </motion.div>
@@ -834,7 +834,7 @@ const myPackages = () => {
                 onClick={openCalendly}
                 className={`w-full gradient-hero text-primary-foreground border-0 hover:opacity-90 transition-opacity group`}
               >
-                Solicitar información
+                AGENDA UNA DEMO
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
@@ -898,7 +898,7 @@ const myPackages = () => {
                 onClick={openCalendly}
                 className={`w-full gradient-hero text-primary-foreground border-0 hover:opacity-90 transition-opacity group`}
               >
-                Solicitar información
+                AGENDA UNA DEMO
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>

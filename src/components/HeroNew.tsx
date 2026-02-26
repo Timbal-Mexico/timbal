@@ -134,7 +134,7 @@ const HeroNew = () => {
               onClick={openCalendly}
             >
               <span className="relative z-10 flex items-center gap-2">
-                Agenda una llamada
+                AGENDA UNA DEMO
               </span>
               <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-secondary via-primary to-secondary" />
             </Button>
