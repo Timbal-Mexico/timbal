@@ -599,7 +599,6 @@ const Pricing = () => {
                         <AccordionContent>
                           <div className="space-y-2">
                             {[
-                              "1 usuario Kommo – Plan anual",
                               "Configuración inicial del entorno",
                               "Creación de 1 pipeline ecommerce",
                               "Integración automática tienda → CRM",
