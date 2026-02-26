@@ -12,10 +12,8 @@ const plans = [
     description: "Servicio base para implementar Kommo CRM en tu operación.",
     price: 25000,
     features: [
-      "Kommo CRM",
-      "2 usuarios - Plan anual",
-      "Configuración inicial",
-      "1 embudo de ventas",
+      "Configuración inicial del entorno",
+      "Diseño de 1 embudo de ventas",
       "6 horas de capacitación",
       "Soporte vía email"
     ],
@@ -29,7 +27,6 @@ const plans = [
     description: "Service core para escalar tu operación comercial con Kommo.",
     price: 55000,
     features: [
-      "5 usuarios Kommo - Plan anual",
       "Configuración completa del entorno",
       "Diseño de hasta 3 embudos personalizados",
       "Conexión de WhatsApp + redes sociales",
@@ -49,7 +46,7 @@ const plans = [
   {
     name: "Ecommerce 360 Starter",
     description: "Implementación de tienda Shopify integrada con Kommo y logística.",
-    price: 38000,
+    price: 25000,
     features: [
       "Tienda en Shopify",
       "Configuración inicial de la tienda",
@@ -60,7 +57,6 @@ const plans = [
       "Carga inicial de hasta 40 productos",
       "Creación de páginas básicas (Inicio, Catálogo, Contacto, Políticas)",
       "Configuración básica SEO (títulos y descripciones generales)",
-      "1 usuario Kommo – Plan anual",
       "Configuración inicial del entorno en Kommo",
       "Creación de 1 pipeline ecommerce",
       "Integración automática tienda → CRM",
@@ -204,6 +200,117 @@ const Pricing = () => {
     return round2(mxn);
   }
 
+  const kommoPlansData = [
+    {
+      name: "Básico",
+      basePrice: 15,
+      features: [
+        "Pipeline de ventas",
+        "Integración con email",
+        "Tareas y recordatorios",
+        "App móvil"
+      ],
+      color: "bg-blue-500",
+      textColor: "text-blue-600",
+      bgColor: "bg-blue-50"
+    },
+    {
+      name: "Avanzado",
+      basePrice: 25,
+      features: [
+        "Automatización de ventas (Digital Pipeline)",
+        "Chatbot y plantillas de IA",
+        "Integración con redes sociales",
+        "Métricas avanzadas"
+      ],
+      popular: true,
+      color: "bg-purple-500",
+      textColor: "text-purple-600",
+      bgColor: "bg-purple-50"
+    },
+    {
+      name: "Empresarial",
+      basePrice: 45,
+      features: [
+        "Auditoría de actividad",
+        "Monitoreo de actividad",
+        "Soporte prioritario",
+        "Límites extendidos"
+      ],
+      color: "bg-indigo-500",
+      textColor: "text-indigo-600",
+      bgColor: "bg-indigo-50"
+    }
+  ];
+
+  const [kommoPlanType, setKommoPlanType] = useState<"Básico" | "Avanzado" | "Empresarial">("Avanzado");
+  const [kommoUsers, setKommoUsers] = useState(1);
+  const [kommoMonths, setKommoMonths] = useState(12);
+
+  const getKommoPrice = () => {
+    const plan = kommoPlansData.find(p => p.name === kommoPlanType);
+    if (!plan) return 0;
+    
+    // Base price in USD
+    const usdTotal = plan.basePrice * kommoUsers * kommoMonths;
+
+    // Convert based on selected currency
+    if (currency === "MXN") {
+      // Assuming a default rate if API fails, but ideally we use the fetched rate
+      // Since we don't have direct access to the rate inside this render function easily without state,
+      // let's assume we can inverse the calculation or just display USD for simplicity if that was the intention.
+      // But the request says "selector de tipo de cambio afecte".
+      // We need to use the `usdRate` state.
+      
+      // Since the API fetches "MXN base", 1 USD = 1 / rateUsd (if rateUsd is MXN->USD? No, API is usually 1 Base -> Target)
+      // The API is: https://api.exchangerate-api.com/v4/latest/MXN
+      // So rates.USD is how many USD you get for 1 MXN. e.g. 0.05
+      // So 1 USD = 1 / 0.05 MXN = 20 MXN.
+      
+      if (usdRate) {
+         // usdRate is value of 1 MXN in USD.
+         // Price in MXN = Price in USD / usdRate
+         return Math.round(usdTotal / usdRate);
+      }
+      return Math.round(usdTotal * 20); // Fallback
+    }
+    
+    if (currency === "EUR") {
+       // We need USD -> EUR rate.
+       // We have MXN -> USD and MXN -> EUR.
+       // 1 MXN = rateUsd USD
+       // 1 MXN = rateEur EUR
+       // 1 USD = (rateEur / rateUsd) EUR
+       
+       if (usdRate && eurRate) {
+          return Math.round(usdTotal * (eurRate / usdRate));
+       }
+       return Math.round(usdTotal * 0.92); // Fallback
+    }
+
+    return usdTotal;
+  };
+
+  const getKommoPricePerUser = () => {
+    const plan = kommoPlansData.find(p => p.name === kommoPlanType);
+    const baseUsd = plan ? plan.basePrice : 0;
+    
+    if (currency === "MXN") {
+       if (usdRate) return Math.round(baseUsd / usdRate);
+       return Math.round(baseUsd * 20);
+    }
+    if (currency === "EUR") {
+       if (usdRate && eurRate) return Math.round(baseUsd * (eurRate / usdRate));
+       return Math.round(baseUsd * 0.92);
+    }
+    return baseUsd;
+  }
+
+  const handleKommoUsersChange = (val: number) => {
+    if (val < 1) setKommoUsers(1);
+    else setKommoUsers(val);
+  };
+
   return (
     <section id="pricing" className="py-24 bg-background relative">
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
@@ -227,7 +334,7 @@ const Pricing = () => {
               Implementación profesional de sistemas que se pagan solos con los resultados que generan.
             </p>
           </motion.div>
-          {/* <div className="mt-6 flex items-center justify-center gap-3">
+          <div className="mt-6 flex items-center justify-center gap-3">
             <div className="inline-flex items-center rounded-full border border-border/60 bg-background/60 p-1 text-xs">
               {(["MXN", "USD", "EUR"] as const).map((c) => (
                 <button
@@ -244,14 +351,155 @@ const Pricing = () => {
                 </button>
               ))}
             </div>
-          loadingRate && (currency === "USD" || currency === "EUR") && (
+            {loadingRate && (currency === "USD" || currency === "EUR") && (
               <span className="text-xs text-muted-foreground">Actualizando tipo de cambio…</span>
-            )} 
-          </div>*/ }
+            )}
+          </div>
         </div>
 
         {/* Cards Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto items-stretch">
+        <div className="grid md:grid-cols-4 gap-8 max-w-[90rem] mx-auto items-stretch">
+          {/* Kommo Interactive Plan */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="relative h-full md:col-span-1"
+          >
+            <Card className="h-full flex flex-col border-border bg-card/50 transition-all duration-300 hover:shadow-xl hover:border-primary/40">
+               <CardHeader className="pb-4">
+                 <div className="flex items-center justify-between mb-4">
+                   <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+                     <img src="/images/kommo_logo_icon.png" alt="Kommo" className="w-8 h-8 object-contain" />
+                   </div>
+                   <div className="bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                     <Star className="w-3 h-3 fill-current" /> Partner Oficial
+                   </div>
+                 </div>
+                 <CardTitle className="text-xl font-bold">Licencia Kommo</CardTitle>
+                 <CardDescription className="text-xs">
+                   Contrata tu licencia oficial directamente con nosotros.
+                 </CardDescription>
+               </CardHeader>
+
+               <CardContent className="flex-grow space-y-6">
+                 {/* Plan Type Selector */}
+                 <div className="space-y-2">
+                   <label className="text-xs font-semibold text-muted-foreground">Tipo de Plan</label>
+                   <div className="grid grid-cols-3 gap-1 bg-muted/50 p-1 rounded-lg">
+                     {kommoPlansData.map((p) => (
+                       <button
+                         key={p.name}
+                         onClick={() => setKommoPlanType(p.name as any)}
+                         className={`text-[10px] py-1.5 rounded-md transition-all font-medium border ${
+                           kommoPlanType === p.name
+                             ? `bg-white shadow-sm border-transparent ${p.textColor}`
+                             : "text-muted-foreground hover:text-foreground border-transparent hover:bg-white/50"
+                         }`}
+                         style={kommoPlanType === p.name ? { boxShadow: `0 2px 8px -2px ${p.color.replace('bg-', 'rgba(').replace('-500', ', 0.3)')}` } : {}}
+                       >
+                         {p.name}
+                       </button>
+                     ))}
+                   </div>
+                 </div>
+
+                {/* Users Selector */}
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-muted-foreground flex justify-between">
+                    <span>Usuarios</span>
+                    <span className="text-primary font-bold">{kommoUsers}</span>
+                  </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="15"
+                    step="1"
+                    value={kommoUsers}
+                    onChange={(e) => handleKommoUsersChange(parseInt(e.target.value))}
+                    className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                  />
+                  <div className="flex justify-between text-[10px] text-muted-foreground">
+                    <span>1</span>
+                    <span>10+</span>
+                  </div>
+                </div>
+
+                {/* Duration Selector */}
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-muted-foreground">Duración</label>
+                  <div className="grid grid-cols-4 gap-1">
+                    {[6, 9, 12, 24].map((m) => (
+                      <button
+                        key={m}
+                        onClick={() => setKommoMonths(m)}
+                        className={`text-[10px] py-1 border rounded-md transition-all ${
+                          kommoMonths === m
+                            ? "border-primary bg-primary/5 text-primary font-bold"
+                            : "border-border bg-transparent text-muted-foreground hover:border-primary/30"
+                        }`}
+                      >
+                        {m} m
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Pricing Display */}
+                <div className="bg-muted/30 rounded-xl p-4 border border-border/50 text-center">
+                  {kommoUsers > 10 ? (
+                    <div className="py-2">
+                      <p className="font-bold text-lg text-primary mb-1">Cotización Especial</p>
+                      <p className="text-xs text-muted-foreground">Para equipos grandes</p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="text-xs text-muted-foreground mb-1">Precio Total Estimado</div>
+                      <div className="text-3xl font-bold text-foreground">
+                        {currency === "USD" ? `$${getKommoPrice().toLocaleString()}` : formatMoney(getKommoPrice(), currency).replace(currency === "EUR" ? "€" : "$", currency === "EUR" ? "€" : "$")} <span className="text-sm font-normal text-muted-foreground">{currency}</span>
+                      </div>
+                      <div className="text-[10px] text-muted-foreground mt-1">
+                        {currency === "USD" ? `$${getKommoPricePerUser()}` : formatMoney(getKommoPricePerUser(), currency).replace(currency === "EUR" ? "€" : "$", currency === "EUR" ? "€" : "$")} {currency} / usuario / mes
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Features List */}
+                <div className="space-y-2 pt-2">
+                  <p className="text-xs font-semibold">Incluye:</p>
+                  {kommoPlansData.find(p => p.name === kommoPlanType)?.features.map((f, i) => (
+                    <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3 h-3 text-primary mt-0.5 shrink-0" />
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+
+              <CardFooter>
+                <Button
+                  asChild
+                  className="w-full rounded-full"
+                  size="lg"
+                >
+                  <a
+                    href={buildWhatsAppUrl(
+                      kommoUsers > 10 
+                        ? `Licencia Kommo Enterprise (+10 usuarios)` 
+                        : `Licencia Kommo ${kommoPlanType} (${kommoUsers} usuarios, ${kommoMonths} meses)`
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {kommoUsers > 10 ? "Contactar Ventas" : "Contratar Licencia"}
+                  </a>
+                </Button>
+              </CardFooter>
+            </Card>
+          </motion.div>
+
           {plans.map((plan, index) => (
             <motion.div
               key={index}
@@ -272,17 +520,17 @@ const Pricing = () => {
                 <div className="absolute top-4 right-4 md:-top-5 md:-right-5 z-40 pointer-events-none transform md:rotate-12 transition-transform duration-300 group-hover:scale-105">
                    <div className="relative flex items-center justify-center h-28 w-28">
                       <div className="absolute inset-0 bg-red-500 rounded-full blur-md opacity-40 animate-pulse"></div>
-                      <div className="relative h-24 w-24 bg-gradient-to-br from-red-600 to-pink-600 rounded-full flex flex-col items-center justify-center text-white shadow-xl border-4 border-white/20 p-2">
-                        <span className="text-xs font-bold uppercase leading-tight tracking-wider">Aprovecha</span>
-                        <span className="text-lg font-black uppercase leading-none my-0.5 tracking-tighter scale-110">Todo</span>
-                        <span className="text-xs font-bold uppercase leading-tight tracking-wider">Marzo</span>
+                      <div className="relative h-24 w-24 bg-gradient-to-br from-red-600 to-pink-600 rounded-full flex flex-col items-center justify-center text-white shadow-xl border-4 border-white/20 p-1">
+                        <span className="text-[10px] font-bold uppercase leading-tight tracking-wider">Hasta el</span>
+                        <span className="text-2xl font-black uppercase leading-none my-0 tracking-tighter scale-110">31</span>
+                        <span className="text-[10px] font-bold uppercase leading-tight tracking-wider">de Marzo</span>
                       </div>
                    </div>
                 </div>
               )}
               
               <Card className={`h-full flex flex-col transition-all duration-300 will-change-transform transform-gpu overflow-visible relative
-                ${plan.name.includes("Ecommerce") 
+                ${plan.name.includes("Ecommerce") || plan.name.includes("Starter")
                   ? "border-primary/50 shadow-2xl bg-purple-500/5 hover:bg-purple-500/10 hover:shadow-purple-500/20 group-hover:border-transparent group-hover:ring-[3px] group-hover:ring-gradient-to-r group-hover:from-purple-500 group-hover:via-pink-500 group-hover:to-red-500" 
                   : plan.highlight 
                     ? "border-primary shadow-2xl bg-card" 
