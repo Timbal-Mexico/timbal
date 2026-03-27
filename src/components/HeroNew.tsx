@@ -3,16 +3,22 @@ import { Button } from "./ui/button";
 import { ParticleNetwork } from "./ui/particle-network";
 import { useEffect } from "react";
 
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (opts: { url: string }) => void;
+    };
+  }
+}
+
 const HeroNew = () => {
   const { scrollY } = useScroll();
   const backgroundY = useTransform(scrollY, [0, 500], [0, 100]); // 0.2x speed for background
 
   const openCalendly = () => {
-    // @ts-ignore
     if (window.Calendly) {
-      // @ts-ignore
       window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/timbalcomunicaciones/30min'
+        url: "https://calendly.com/timbalcomunicaciones/30min",
       });
       return false;
     }

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Search, PenTool, Cog, GraduationCap, HeartHandshake, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from "swiper/modules";
+import type { Swiper as SwiperClass } from "swiper";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -73,7 +74,7 @@ const steps = [
 
 const Process = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const [swiperInstance, setSwiperInstance] = useState<SwiperClass | null>(null);
 
   return (
     <section id="como-trabajamos" className="py-24 bg-background relative overflow-hidden">

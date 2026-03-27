@@ -11,6 +11,23 @@ const EcommerceLanding = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const testimonial = {
+    company: "Brasarmada",
+    personName: "[NOMBRE Y APELLIDO]",
+    role: "[CARGO]",
+    period: "[PERÍODO, EJ. 90 DÍAS]",
+    bookingsIncreasePercent: "[+XX%]",
+    profitImpact: "[IMPACTO EN GANANCIA, EJ. +YY% O $Z]",
+    servicesUsed: [
+      "Implementación de Shopify",
+      "Integración Shopify → Kommo CRM",
+      "Automatización de seguimiento",
+      "Integración logística"
+    ],
+    quote:
+      "Antes de trabajar con Timbal, nuestras reservas (bookings) dependían de seguimiento manual y se nos caían oportunidades por falta de control. En [PERÍODO], incrementamos los bookings en [ +XX% ] con un flujo claro: tienda, CRM y logística trabajando juntos. Ese incremento se reflejó directamente en la rentabilidad: [IMPACTO EN GANANCIA]. Timbal no nos vendió “una tienda”, nos entregó un sistema comercial implementado y operable. Si tu empresa quiere vender con proceso y no con improvisación, lo recomiendo totalmente."
+  };
+
   const features = {
     tienda: [
       "Configuración inicial de la tienda",
@@ -207,6 +224,70 @@ const EcommerceLanding = () => {
                   Integración con Envia.com para gestión de guías y envíos automatizados.
                 </CardDescription>
               </CardHeader>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="font-display text-3xl font-bold mb-4">Resultados en operación real</h2>
+              <p className="text-muted-foreground">
+                Sustituye los campos entre corchetes con los datos reales del caso para publicar este testimonio.
+              </p>
+            </div>
+
+            <Card className="border-border bg-card/50">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold">{testimonial.company}</CardTitle>
+                <CardDescription className="text-sm">
+                  {testimonial.personName} · {testimonial.role}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <div className="rounded-xl border border-border/50 bg-muted/30 p-4">
+                    <div className="text-xs text-muted-foreground mb-1">Incremento de bookings</div>
+                    <div className="text-2xl font-black text-foreground">{testimonial.bookingsIncreasePercent}</div>
+                    <div className="text-xs text-muted-foreground mt-1">{testimonial.period}</div>
+                  </div>
+                  <div className="rounded-xl border border-border/50 bg-muted/30 p-4">
+                    <div className="text-xs text-muted-foreground mb-1">Impacto en ganancia</div>
+                    <div className="text-2xl font-black text-foreground">{testimonial.profitImpact}</div>
+                    <div className="text-xs text-muted-foreground mt-1">Resultado directo</div>
+                  </div>
+                  <div className="rounded-xl border border-border/50 bg-muted/30 p-4">
+                    <div className="text-xs text-muted-foreground mb-1">Stack implementado</div>
+                    <div className="text-sm font-semibold text-foreground">Shopify + Kommo + Logística</div>
+                    <div className="text-xs text-muted-foreground mt-1">Sistema integrado</div>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-border/50 bg-background/50 p-6">
+                  <p className="text-foreground leading-relaxed">{testimonial.quote}</p>
+                </div>
+
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {testimonial.servicesUsed.map((s) => (
+                    <div key={s} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                      <span>{s}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-2">
+                  <Button
+                    size="lg"
+                    className="w-full rounded-full gradient-hero text-primary-foreground"
+                    onClick={() => window.open(buildWhatsAppUrl(), "_blank")}
+                  >
+                    Solicitar implementación
+                  </Button>
+                </div>
+              </CardContent>
             </Card>
           </div>
         </div>

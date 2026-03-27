@@ -9,6 +9,8 @@ const logos = [
   { src: "/images/clientes/kuzka.jpeg", alt: "Kuzka" },
   { src: "/images/clientes/land4fun.jpg", alt: "Land 4 Fun" },
   { src: "/images/clientes/mamalov_logo_blanco.svg", alt: "Mamalov" },
+  { src: "/images/clientes/mitlogo.png", alt: "MIT" },
+  { src: "/images/clientes/thermoco.png", alt: "Thermoco" },
 ];
 
 const AUTOPLAY_INTERVAL_MS = 3500;

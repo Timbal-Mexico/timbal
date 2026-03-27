@@ -34,12 +34,22 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const w = window as any;
-    const m = "crm_plugin";
-    const o = "crmPlugin";
+    type CrmPluginConfig = {
+      id: string;
+      hash: string;
+      locale: string;
+      params?: unknown[];
+      setMeta: (p: unknown) => void;
+    };
+    type CrmPluginFn = ((...args: unknown[]) => void) & { q?: unknown[][] };
 
-    if (!w[m]) {
-      w[m] = {
+    const w = window as Window & {
+      crm_plugin?: CrmPluginConfig;
+      crmPlugin?: CrmPluginFn;
+    };
+
+    if (!w.crm_plugin) {
+      w.crm_plugin = {
         id: "1067301",
         hash: "8535d435ffbf09071b4b3d20dd39347ec645c133384879d4eb865446aa83ffd6",
         locale: "es",
@@ -49,17 +59,18 @@ const Index = () => {
       };
     }
 
-    if (!w[o]) {
-      w[o] = function () {
-        (w[o].q = w[o].q || []).push(arguments);
+    if (!w.crmPlugin) {
+      w.crmPlugin = (...args: unknown[]) => {
+        w.crmPlugin!.q = w.crmPlugin!.q || [];
+        w.crmPlugin!.q.push(args);
       };
     }
 
-    if (document.getElementById(`${m}_script`)) return;
+    if (document.getElementById("crm_plugin_script")) return;
 
     const s = document.createElement("script");
     s.async = true;
-    s.id = `${m}_script`;
+    s.id = "crm_plugin_script";
     s.src = "https://gso.kommo.com/js/button.js";
     document.head?.appendChild(s);
   }, []);

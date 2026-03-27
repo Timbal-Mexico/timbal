@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCards, Pagination, Autoplay, Navigation } from "swiper/modules";
+import type { Swiper as SwiperClass } from "swiper";
 import { ArrowRight, Database, ShoppingCart, Truck, Users, BarChart3, MessageCircle, ChevronRight, Zap, Globe, ShieldCheck, LineChart, CheckCircle2 } from "lucide-react";
 import "swiper/css";
 import "swiper/css/effect-cards";
@@ -62,7 +63,7 @@ const steps = [
 
 const Ecosystem = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const [swiperInstance, setSwiperInstance] = useState<SwiperClass | null>(null);
 
   return (
     <section className="py-24 bg-background relative overflow-hidden">
